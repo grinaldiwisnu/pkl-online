@@ -19,12 +19,16 @@ $this->load->view('dist/_partials/header');
                 <form method="POST">
                   <div class="row">
                     <div class="form-group col-6">
-                      <label for="frist_name">Nama Depan</label>
-                      <input id="frist_name" type="text" class="form-control" name="frist_name" autofocus>
+                      <label for="name">Nama Depan</label>
+                      <input id="name" type="text" class="form-control" name="name" autofocus>
                     </div>
                     <div class="form-group col-6">
-                      <label for="last_name">Nama Belakang</label>
-                      <input id="last_name" type="text" class="form-control" name="last_name">
+                      <label for="last_name">Asal Sekolah/Universitas</label>
+                      <select class="form-control" id="institution" name="institution">
+                        <option>Option 1</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                      </select>
                     </div>
                   </div>
 
