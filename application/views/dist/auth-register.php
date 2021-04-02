@@ -9,14 +9,16 @@ $this->load->view('dist/_partials/header');
         <div class="row">
           <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
             <div class="login-brand">
-              <img src="<?php echo base_url(); ?>assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+            <img src="<?php echo base_url(); ?>assets/img/logo-po.png" alt="logo" width="120" class="shadow-light p-3 rounded-circle">
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Register</h4></div>
-
+              <div class="card-header"><h4>Mendaftar sebagai siswa</h4></div>
+              
               <div class="card-body">
-                <form method="POST">
+                <form id="form-register" method="POST">
+                  <div id="register-success" class="alert alert-success" style="display:none"></div>
+                  <div id="register-failed" class="alert alert-danger" style="display:none"></div>
                   <div class="row">
                     <div class="form-group col-6">
                       <label for="name">Nama Depan</label>
@@ -25,9 +27,7 @@ $this->load->view('dist/_partials/header');
                     <div class="form-group col-6">
                       <label for="last_name">Asal Sekolah/Universitas</label>
                       <select class="form-control" id="institution" name="institution">
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                        <option>Option 3</option>
+                        <option>Memuat ...</option>
                       </select>
                     </div>
                   </div>
@@ -78,6 +78,9 @@ $this->load->view('dist/_partials/header');
                   </div>
                 </form>
               </div>
+            </div>
+            <div class="mt-5 text-muted text-center">
+              Sudah punya akun? <a href="<?php echo base_url(); ?>auth">Masuk</a>
             </div>
             <div class="simple-footer">
               Copyright &copy; Stisla 2018

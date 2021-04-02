@@ -56,3 +56,4 @@ $route['translate_uri_dashes'] = FALSE;
 // API ROUTES
 $route['api/auth/login'] = 'API/authAPI';
 $route['api/auth/register'] = 'API/registerAPI';
+$route['api/institution/all'] = 'API/getInstitutionAPI';

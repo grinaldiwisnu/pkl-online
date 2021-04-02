@@ -26,7 +26,7 @@ class API extends CI_Controller {
 		} else {
 			$data = array('USER_EMAIL' => $email, 'USER_PASSWORD' => $password);
 			if ( $do = $this->API->Auth($data)) {
-				$arr = array('login' => true, 'session' => $email, 'name' => $do->name, 'id' => $do->idadmin);
+				$arr = array('login' => true, 'session' => $email, 'name' => $do->USER_FULLNAME, 'id' => $do->USER_ID);
 				$this->session->set_userdata($arr);
 				$this->msg = array('status' => true, 'message' => 'User logged', 'data' => $do);
 			} else {
@@ -57,11 +57,20 @@ class API extends CI_Controller {
 			);
 
 			if ( $do = $this->API->Register($data)) {
-				$this->msg = array('status' => true, 'message' => 'User logged', 'data' => $data);
+				$this->msg = array('status' => true, 'message' => 'User created', 'data' => $data);
 			} else {
 				$this->msg = array('status' => false, 'message' => 'Internal server error', 'data' => null);
 			}
 		}
+
+		echo json_encode($this->msg);
+	}
+
+	public function getInstitutionAPI()
+	{
+		$result = $this->API->getAllInstitution();
+
+		$this->msg = array('status' => true, 'message' => 'get Institution success', 'data' => $result);
 
 		echo json_encode($this->msg);
 	}
