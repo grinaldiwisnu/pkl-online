@@ -14,10 +14,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <li class="<?php echo $this->uri->segment(2) == '' || $this->uri->segment(2) == 'index' || $this->uri->segment(2) == 'index_0' ? 'active' : ''; ?>">
               <a href="<?php echo base_url(); ?>home" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
             </li>
-            <li class="menu-header">Starter</li>
+            <?php if (!$this->session->userdata('admin')) : ?>
+            <li class="menu-header">Menu</li>
             <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-grip-horizontal"></i> <span>Produk Saya</span></a></li>
             <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-shopping-cart"></i> <span>Pembelian</span></a></li>
             <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
+            <?php elseif ($this->session->userdata('admin')) : ?>
+            <li class="menu-header">Admin Menu</li>
+            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-hotel"></i> <span>Perusahaan</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-university"></i> <span>Institusi Partner</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-shopping-cart"></i> <span>Pembelian</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
+            <?php endif; ?>
           </ul>
 
           <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

@@ -14,6 +14,26 @@ class API_Model extends CI_Model {
 		}
     }
 
+	public function authAdmin($params)
+    {
+        $query = $this->db->where($params)->get('ADMIN');
+		if ($this->db->affected_rows() == 1) {
+			return $query->row();
+		} else {
+			return false;
+		}
+    }
+
+	public function checkAdmin($params)
+	{
+		$query = $this->db->where($params)->get('ADMIN');
+		if ($this->db->affected_rows() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function register($params)
 	{
 		$query = $this->db->insert('USER', $params);

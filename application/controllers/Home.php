@@ -9,14 +9,23 @@ class Home extends CI_Controller {
         if (!$this->session->userdata('login')) {
             redirect('auth','refresh');
         }
+        $this->load->model('API_Model', 'API');
     }
     
     public function index()
     {
-        $data = array(
-			'title' => "Dashboard"
-		);
-		$this->load->view('dist/index', $data);
+        $isAdmin = $this->API->checkAdmin(array('ADMIN_ID' => $this->session->userdata('id')));
+        if ($isAdmin) {
+            $data = array(
+                'title' => "Admin Dashboard"
+            );
+            $this->load->view('dist/index-admin', $data);
+        } else {
+            $data = array(
+                'title' => "Dashboard"
+            );
+            $this->load->view('dist/index', $data);
+        }
     }
 
     public function logout()

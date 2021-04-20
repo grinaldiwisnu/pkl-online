@@ -24,9 +24,12 @@ class API extends CI_Controller {
 		if ($email == '' || $password == '') {
 			$this->msg = array('status' => false, 'message' => 'Payload empty', 'data' => null);
 		} else {
-			$data = array('USER_EMAIL' => $email, 'USER_PASSWORD' => $password);
-			if ( $do = $this->API->Auth($data)) {
+			if ( $do = $this->API->Auth(array('USER_EMAIL' => $email, 'USER_PASSWORD' => $password))) {
 				$arr = array('login' => true, 'session' => $email, 'name' => $do->USER_FULLNAME, 'id' => $do->USER_ID);
+				$this->session->set_userdata($arr);
+				$this->msg = array('status' => true, 'message' => 'User logged', 'data' => $do);
+			} else if ($do = $this->API->AuthAdmin(array('ADMIN_EMAIL' => $email, 'ADMIN_PASSWORD' => $password))) {
+				$arr = array('login' => true, 'admin' => true, 'session' => $email, 'name' => $do->ADMIN_NAME, 'id' => $do->ADMIN_ID);
 				$this->session->set_userdata($arr);
 				$this->msg = array('status' => true, 'message' => 'User logged', 'data' => $do);
 			} else {
