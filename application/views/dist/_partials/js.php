@@ -83,11 +83,14 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 }elseif ($this->uri->segment(2) == "modules_chartjs") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/chart.min.js"></script>
 <?php
-}elseif ($this->uri->segment(2) == "modules_datatables") { ?>
+}elseif ($this->uri->segment(1) == "master") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/prism/prism.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/page/bootstrap-modal.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/page/master.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "modules_owl_carousel") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/owlcarousel2/dist/owl.carousel.min.js"></script>
@@ -196,7 +199,7 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 }elseif ($this->uri->segment(2) == "modules_chartjs") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/modules-chartjs.js"></script>
 <?php
-}elseif ($this->uri->segment(2) == "modules_datatables") { ?>
+}elseif ($this->uri->segment(1) == "master") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/modules-datatables.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "modules_ion_icons") { ?>

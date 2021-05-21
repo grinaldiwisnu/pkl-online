@@ -16,7 +16,7 @@ $this->load->view('dist/_partials/header');
                     <h4>Total Pengguna</h4>
                   </div>
                   <div class="card-body">
-                    0
+                    <?= $total_user; ?>
                   </div>
                 </div>
               </div>
@@ -31,7 +31,7 @@ $this->load->view('dist/_partials/header');
                     <h4>Total Penjualan</h4>
                   </div>
                   <div class="card-body">
-                    0
+                  <?= $total_selling; ?>
                   </div>
                 </div>
               </div>
@@ -46,7 +46,7 @@ $this->load->view('dist/_partials/header');
                     <h4>Total Produk</h4>
                   </div>
                   <div class="card-body">
-                    0
+                  <?= $total_product; ?>
                   </div>
                 </div>
               </div>
@@ -61,7 +61,7 @@ $this->load->view('dist/_partials/header');
                     <h4>Total Perusahaan</h4>
                   </div>
                   <div class="card-body">
-                    0
+                  <?= $total_company; ?>
                   </div>
                 </div>
               </div>

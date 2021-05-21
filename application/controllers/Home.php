@@ -16,8 +16,17 @@ class Home extends CI_Controller {
     {
         $isAdmin = $this->API->checkAdmin(array('ADMIN_ID' => $this->session->userdata('id')));
         if ($isAdmin) {
+            $totalUser = $this->API->getUserRow();
+            $totalCompany = $this->API->getCompanyRow();
+            $totalProduct = $this->API->getProductRow();
+            $totalSelling = $this->API->getSellingRow();
+
             $data = array(
-                'title' => "Admin Dashboard"
+                'title' => "Admin Dashboard",
+                'total_user' => $totalUser,
+                'total_company' => $totalCompany,
+                'total_product' => $totalProduct,
+                'total_selling' => $totalSelling
             );
             $this->load->view('dist/index-admin', $data);
         } else {

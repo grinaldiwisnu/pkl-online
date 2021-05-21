@@ -22,7 +22,7 @@ class API extends CI_Controller {
         $email = $this->input->post('email');
 		$password = $this->input->post('password');
 		if ($email == '' || $password == '') {
-			$this->msg = array('status' => false, 'message' => 'Payload empty', 'data' => null);
+			$this->msg = array('status' => false, 'message' => 'Email/password kosong', 'data' => null);
 		} else {
 			if ( $do = $this->API->Auth(array('USER_EMAIL' => $email, 'USER_PASSWORD' => $password))) {
 				$arr = array('login' => true, 'session' => $email, 'name' => $do->USER_FULLNAME, 'id' => $do->USER_ID);
@@ -31,7 +31,7 @@ class API extends CI_Controller {
 			} else if ($do = $this->API->AuthAdmin(array('ADMIN_EMAIL' => $email, 'ADMIN_PASSWORD' => $password))) {
 				$arr = array('login' => true, 'admin' => true, 'session' => $email, 'name' => $do->ADMIN_NAME, 'id' => $do->ADMIN_ID);
 				$this->session->set_userdata($arr);
-				$this->msg = array('status' => true, 'message' => 'User logged', 'data' => $do);
+				$this->msg = array('status' => true, 'message' => 'Login berhasil, mengarahkan ke dashboard ...', 'data' => $do);
 			} else {
 				$this->msg = array('status' => false, 'message' => 'Internal server error', 'data' => null);
 			}

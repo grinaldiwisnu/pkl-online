@@ -56,4 +56,33 @@ $route['translate_uri_dashes'] = FALSE;
 // API ROUTES
 $route['api/auth/login'] = 'API/authAPI';
 $route['api/auth/register'] = 'API/registerAPI';
+
+// WEB ROUTES
+$route['master/institution/detail/:num'] = 'Master/detail_institution';
+$route['master/company/detail/:num'] = 'Master/detail_company';
+
+// Institution Master Endpoint
 $route['api/institution/all'] = 'API/getInstitutionAPI';
+$route['api/master/add/institution'] = 'Master/add_institution';
+$route['api/master/get/institution/:num'] = 'Master/get_institution';
+$route['api/master/update/institution'] = 'Master/update_institution';
+$route['api/master/delete/institution/:num'] = 'Master/delete_institution';
+
+// Company Master Endpoint
+$route['api/company/all'] = 'API/getCompanyAPI';
+$route['api/master/add/company'] = 'Master/add_company';
+$route['api/master/get/company/:num'] = 'Master/get_company';
+$route['api/master/update/company'] = 'Master/update_company';
+$route['api/master/delete/company/:num'] = 'Master/delete_company';
+
+// Product Master Endpoint
+$route['api/product/all'] = 'API/getProductAPI';
+$route['api/master/add/product'] = 'Master/add_product';
+$route['api/master/get/product/:num'] = 'Master/get_product';
+$route['api/master/update/product'] = 'Master/update_product';
+$route['api/master/delete/product/:num'] = 'Master/delete_product';
+
+// User Master Endpoint
+$route['api/master/get/user/:num'] = 'Master/get_user_institution';
+$route['api/master/update/user'] = 'Master/update_user_institution';
+$route['api/master/delete/user/:num'] = 'Master/delete_user_institution';
