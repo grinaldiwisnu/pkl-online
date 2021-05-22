@@ -83,13 +83,7 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 }elseif ($this->uri->segment(2) == "modules_chartjs") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/chart.min.js"></script>
 <?php
-}elseif ($this->uri->segment(1) == "master") { ?>
-  <script src="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/prism/prism.js"></script>
-  <script src="<?php echo base_url(); ?>assets/js/page/bootstrap-modal.js"></script>
+}elseif ($this->uri->segment(1) == "master" || $this->uri->segment(2) == "") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/master.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "modules_owl_carousel") { ?>
@@ -199,8 +193,8 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 }elseif ($this->uri->segment(2) == "modules_chartjs") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/modules-chartjs.js"></script>
 <?php
-}elseif ($this->uri->segment(1) == "master") { ?>
-  <script src="<?php echo base_url(); ?>assets/js/page/modules-datatables.js"></script>
+}elseif ($this->uri->segment(1) == "master" || $this->uri->segment(1) == "product") { ?>
+  
 <?php
 }elseif ($this->uri->segment(2) == "modules_ion_icons") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/modules-ion-icons.js"></script>
@@ -236,7 +230,15 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/utilities-contact.js"></script>
 <?php
 } ?>
-
+  
+  <script src="<?php echo base_url(); ?>assets/modules/datatables/datatables.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/prism/prism.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/page/bootstrap-modal.js"></script>
+  <script src="<?php echo base_url(); ?>assets/js/page/modules-datatables.js"></script>
+  
   <!-- Template JS File -->
   <script src="<?php echo base_url(); ?>assets/js/scripts.js"></script>
   <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>

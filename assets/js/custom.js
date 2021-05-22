@@ -43,6 +43,9 @@ $(document).ready(() => {
                 if (response.status) {
                     $('#register-success').html(response.message)
                     $('#register-success').show()
+                    setTimeout(() => {
+                        window.history.back
+                    }, 2000);
                 } else {
                     $('#register-failed').html(response.message)
                     $('#register-failed').show()
@@ -66,7 +69,10 @@ $(document).ready(() => {
                 if (response.status) {
                     $('#login-success').html(response.message)
                     $('#login-success').show()
-                    window.location.reload()
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 2000);
+                    
                 } else {
                     $('#login-failed').html(response.message)
                     $('#login-failed').show()
@@ -75,3 +81,10 @@ $(document).ready(() => {
         });
     });
 })
+
+function setPicked(e) {
+    if (e.hasClass('border border-primary'))
+        e.addClass('border border-primary')
+    else
+        e.removeClass('border border-primary')
+ }

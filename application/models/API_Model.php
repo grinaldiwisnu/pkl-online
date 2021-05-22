@@ -65,11 +65,17 @@ class API_Model extends CI_Model {
 		return $query;
 	}
 
-	public function getProductRow()
+	public function getProductRow($uid = null)
 	{
-		$query = $this->db->get('PRODUCT')->num_rows();
+		if ($uid != null) {
+			$query = $this->db->where('USER_ID', $uid)->get('USER_PRODUCT')->num_rows();
 
-		return $query;
+			return $query;
+		} else {
+			$query = $this->db->get('PRODUCT')->num_rows();
+
+			return $query;
+		}
 	}
 
 	public function getCompanyRow()

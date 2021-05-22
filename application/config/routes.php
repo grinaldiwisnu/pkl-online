@@ -60,6 +60,7 @@ $route['api/auth/register'] = 'API/registerAPI';
 // WEB ROUTES
 $route['master/institution/detail/:num'] = 'Master/detail_institution';
 $route['master/company/detail/:num'] = 'Master/detail_company';
+$route['product'] = 'Home/product';
 
 // Institution Master Endpoint
 $route['api/institution/all'] = 'API/getInstitutionAPI';

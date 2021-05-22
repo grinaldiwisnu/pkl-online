@@ -6,3 +6,8 @@
  */
 
 /*# sourceMappingURL=custom.css.map */
+
+.list-product {
+    height:50vh;
+    overflow-y: scroll;
+  }

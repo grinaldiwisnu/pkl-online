@@ -351,6 +351,115 @@ class Master extends CI_Controller {
             }
         }
     }
+
+    public function add_product()
+    {
+        $id = $this->input->post('id');
+        $productName = $this->input->post('name');
+        $productPrice = $this->input->post('price');
+        $productStock = $this->input->post('stock');
+        $productCategory = $this->input->post('category');
+        $productDesc = $this->input->post('description');
+
+        if (empty($id) || empty($productName) || empty($productPrice) || empty($productStock) || empty($productCategory) || empty($productDesc)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field empty', 'data' => null)
+            );
+        } else {
+            $data = array(
+                'PRODUCT_NAME' => $productName,
+                'PRODUCT_DESCRIPTION' => $productDesc,
+                'PRODUCT_PRICE' => $productPrice,
+                'PRODUCT_STOCK' => $productStock,
+                'COMPANY_ID' => $id,
+                'CATEGORY_ID' => $productCategory,
+            );
+
+            $result = $this->API->insert($data, 'PRODUCT');
+            if (!$result) {
+                echo json_encode(
+                    array('status' => false, 'message' => 'Failed to store on server', 'data' => null)
+                );
+            } else {
+                echo json_encode(
+                    array('status' => true, 'message' => 'Add Product success', 'data' => $data)
+                );
+            }
+        }
+    }
+
+    public function get_product()
+    {
+        $id = $this->uri->segment(5);
+        
+        if (empty($id)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field id empty', 'data' => null)
+            );
+        } else {
+            $result = $this->API->getById(array('PRODUCT_ID' => $id), 'PRODUCT');
+            if (!$result) {
+                echo json_encode(
+                    array('status' => false, 'message' => "Data not found $id", 'data' => null)
+                );
+            } else {
+                echo json_encode(
+                    array('status' => true, 'message' => 'Get data product by id success', 'data' => $result)
+                );
+            }
+        }
+    }
+
+    public function update_product()
+    {
+        $id = $this->input->post('id');
+        $productName = $this->input->post('name');
+        $productPrice = $this->input->post('price');
+        $productStock = $this->input->post('stock');
+        $productDesc = $this->input->post('description');
+        $productCategory = $this->input->post('category');
+
+        if (empty($id) || empty($productName) || empty($productPrice) || empty($productStock) || empty($productCategory) || empty($productDesc)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field are empty', 'data' => null)
+            );
+        } else {
+            $param = array('PRODUCT_ID' => $id);
+            $data = array(
+                'PRODUCT_NAME' => $productName,
+                'PRODUCT_DESCRIPTION' => $productDesc,
+                'PRODUCT_PRICE' => $productPrice,
+                'PRODUCT_STOCK' => $productStock,
+                'CATEGORY_ID' => $productCategory,
+            );
+
+            $result = $this->API->update($param, $data, 'PRODUCT');
+            if ($result) {
+                echo json_encode(
+                    array('status' => true, 'message' => 'Update product success', 'data' => $data)
+                );
+            } else {
+                echo json_encode(
+                    array('status' => false, 'message' => 'Failed to update data with id ' + $id, 'data' => null)
+                ); 
+            }
+        }
+    }
+
+    public function delete_product()
+    {
+        $id = $this->uri->segment(5);
+        if (empty($id)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field id empty', 'data' => null)
+            );
+        } else {
+            $result = $this->API->delete(array('PRODUCT_ID' => $id), 'PRODUCT');
+            echo json_encode(
+                array('status' => true, 'message' => 'Delete data product by id success')
+            );
+        }
+    }
 }
 
 /* End of file Master.php */

@@ -96,20 +96,24 @@ $this->load->view('dist/_partials/header');
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Nama Produk</label>
-                    <input type="hidden" name="id" id="id" value="<?= $detail->COMPANY_ID; ?>">
-                    <input type="text" class="form-control" name="name" id="name">
+                    <input type="hidden" name="id" value="<?= $detail->COMPANY_ID; ?>">
+                    <input type="text" class="form-control" name="name">
                   </div>
                   <div class="form-group">
                     <label>Harga Produk</label>
-                    <input type="number" class="form-control" name="price" id="price">
+                    <input type="number" class="form-control" name="price">
                   </div>
                   <div class="form-group">
                     <label>Stok Produk</label>
-                    <input type="number" class="form-control" name="stock" id="phone">
+                    <input type="number" class="form-control" name="stock">
+                  </div>
+                  <div class="form-group">
+                    <label>Deskripsi Produk</label>
+                    <textarea type="text" class="form-control" name="description"></textarea>
                   </div>
                   <div class="form-group">
                     <label>Kategori</label>
-                    <select name="category" id="category" class="form-control">
+                    <select name="category" class="form-control">
                         <option value="">Pilih kategori produk</option>
                       <?php foreach($category as $key) : ?>
                         <option value="<?= $key->CATEGORY_ID; ?>"><?= $key->CATEGORY_NAME; ?></option>
@@ -119,7 +123,7 @@ $this->load->view('dist/_partials/header');
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                  <button type="submit" class="btn btn-primary">Ubah Data</button>
+                  <button type="submit" class="btn btn-primary">Tambah Data</button>
                 </div>
               </form>
             </div>
@@ -147,7 +151,11 @@ $this->load->view('dist/_partials/header');
                   </div>
                   <div class="form-group">
                     <label>Stok Produk</label>
-                    <input type="number" class="form-control" name="stock" id="phone">
+                    <input type="number" class="form-control" name="stock" id="stock">
+                  </div>
+                  <div class="form-group">
+                    <label>Deskripsi Produk</label>
+                    <textarea type="text" class="form-control" name="description" id="desc"></textarea>
                   </div>
                   <div class="form-group">
                     <label>Kategori</label>

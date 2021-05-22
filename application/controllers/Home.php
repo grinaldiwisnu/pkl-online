@@ -14,7 +14,7 @@ class Home extends CI_Controller {
     
     public function index()
     {
-        $isAdmin = $this->API->checkAdmin(array('ADMIN_ID' => $this->session->userdata('id')));
+        $isAdmin = $this->session->userdata('admin');
         if ($isAdmin) {
             $totalUser = $this->API->getUserRow();
             $totalCompany = $this->API->getCompanyRow();
@@ -34,6 +34,27 @@ class Home extends CI_Controller {
                 'title' => "Dashboard"
             );
             $this->load->view('dist/index', $data);
+        }
+    }
+
+    public function product()
+    {
+        $isAdmin = $this->session->userdata('admin');
+        if (!$isAdmin) {
+            $totalProduct = $this->API->getProductRow($this->session->userdata('id'));
+            $user = $this->API->getById(array('USER_ID' => $this->session->userdata('id')), 'USER');
+            $products = $this->API->getChildById(array('USER_ID' => $this->session->userdata('id')), 'USER_PRODUCT');
+            for ($i=0; $i < count($products); $i++) { 
+                $products[$i]->PRODUCT = $this->API->getChildById(array('PRODUCT_ID' => $products[$i].PRODUCT_ID), 'PRODUCT');
+            }
+
+            $data = array(
+                'title' => "Produk Saya",
+                'total_product' => $totalProduct,
+                'products' => $products,
+                'isAvailable' => $user->COMPANY_ID != null ? true : false
+            );
+            $this->load->view('dist/modules-product-user', $data);
         }
     }
 

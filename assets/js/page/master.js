@@ -161,3 +161,83 @@ $("#update-company").on("submit", (e) => {
         }
     });
 })
+
+$("#add-product").on("submit", (e) => {
+    e.preventDefault()
+
+    let data = $("#add-product").serialize()
+
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: _baseUrl + "/master/add/product",
+        data: data,
+        success: function (response) {
+            if (response.status) {
+                window.location.reload()
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+})
+
+$("#update-product").on("submit", (e) => {
+    e.preventDefault()
+
+    let data = $("#update-product").serialize()
+
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: _baseUrl + "/master/update/product",
+        data: data,
+        success: function (response) {
+            if (response.status) {
+                window.location.reload()
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+})
+
+function editProduct(id) {
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: _baseUrl + "/master/get/product/" + id,
+        success: function (response) {
+            if (response.status) {
+                $('#id').val(response.data.PRODUCT_ID)
+                $('#name').val(response.data.PRODUCT_NAME)
+                $('#stock').val(response.data.PRODUCT_STOCK)
+                $('#price').val(response.data.PRODUCT_PRICE)
+                $('#desc').val(response.data.PRODUCT_DESCRIPTION)
+                $('#category').val(response.data.CATEGORY_ID)
+
+                $('#editModal').modal('show')
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+}
+
+function deleteProduct(id) {
+    
+    if (confirm('Ingin mengapus produk')) {
+        $.ajax({
+            type: "GET",
+            dataType: "JSON",
+            url: _baseUrl + "/master/delete/product/" + id,
+            success: function (response) {
+                if (response.status) {
+                    window.location.reload()
+                } else {
+                    alert(response.message)
+                }
+            }
+        });
+    }
+}
