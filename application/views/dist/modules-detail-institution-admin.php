@@ -66,6 +66,7 @@ $this->load->view('dist/_partials/header');
                             <th>Nama Lengkap</th>
                             <th>Email</th>
                             <th>Perusahaan</th>
+                            <th>Target Penjualan</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -79,6 +80,7 @@ $this->load->view('dist/_partials/header');
                             <td><?= $key->USER_FULLNAME; ?></td>
                             <td><?= $key->USER_EMAIL; ?></td>
                             <td><?= $key->COMPANY_ID == null ? "Belum didaftarkan" : $key->COMPANY_DETAIL->COMPANY_NAME; ?></td>
+                            <td><?= $key->TARGET == null ? "Belum ada target" : $key->TARGET; ?></td>
                             <td>
                             <a href="javascript:void(0)" class="btn btn-danger btn-sm delete-company" onclick="deleteUserInstitution(<?= $key->USER_ID; ?>)"><i class="fas fa-trash"></i></a>
                             <a href="javascript:void(0)" class="btn btn-warning btn-sm edit-company" onclick="editUserInstitution(<?= $key->USER_ID; ?>)"><i class="fas fa-edit"></i></a>
@@ -128,6 +130,10 @@ $this->load->view('dist/_partials/header');
                         <option value="<?= $key->COMPANY_ID; ?>"><?= $key->COMPANY_NAME; ?></option>
                       <?php endforeach; ?>
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Target Penjualan</label>
+                    <input type="number" class="form-control" name="target" id="target">
                   </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

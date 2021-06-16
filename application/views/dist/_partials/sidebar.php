@@ -16,15 +16,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
             <?php if (!$this->session->userdata('admin')) : ?>
             <li class="menu-header">Menu</li>
-            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>product"><i class="fa fa-grip-horizontal"></i> <span>Produk Saya</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'product' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>product"><i class="fa fa-grip-horizontal"></i> <span>Produk Saya</span></a></li>
             <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-shopping-cart"></i> <span>Pembelian</span></a></li>
             <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
             <?php elseif ($this->session->userdata('admin')) : ?>
             <li class="menu-header">Admin Menu</li>
-            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/company'); ?>"><i class="fa fa-hotel"></i> <span>Perusahaan</span></a></li>
-            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/institution'); ?>"><i class="fa fa-university"></i> <span>Institusi Partner</span></a></li>
-            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master'); ?>"><i class="fa fa-shopping-cart"></i> <span>Pembelian</span></a></li>
-            <li class="<?php echo $this->uri->segment(2) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/history'); ?>"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'company' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/company'); ?>"><i class="fa fa-hotel"></i> <span>Perusahaan</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'institution' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/institution'); ?>"><i class="fa fa-university"></i> <span>Institusi Partner</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'category' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/category'); ?>"><i class="fa fa-tags"></i> <span>Kategori Produk</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'sell' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master'); ?>"><i class="fa fa-shopping-cart"></i> <span>Pembelian</span></a></li>
+            <li class="<?php echo $this->uri->segment(2) == 'history' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/history'); ?>"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
             <?php endif; ?>
           </ul>
 

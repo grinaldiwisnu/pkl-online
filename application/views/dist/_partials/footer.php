@@ -11,5 +11,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </footer>
     </div>
   </div>
-
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php $this->load->view('dist/_partials/js'); ?>

@@ -58,9 +58,13 @@ class API_Model extends CI_Model {
 		return $query;
 	}
 
-	public function getSellingRow()
+	public function getSellingRow($id = null)
 	{
-		$query = $this->db->get('TRANSACTION')->num_rows();
+		if ($id != null) {
+			$query = $this->db->get('TRANSACTION')->num_rows();
+		} else {
+			$query = $this->db->where('USER_ID', $id)->get('TRANSACTION')->num_rows();
+		}
 
 		return $query;
 	}
@@ -123,8 +127,16 @@ class API_Model extends CI_Model {
 		if ($query) {
 			return $query;
 		} else {
-			return false;
+			return $query;
 		}
+	}
+
+	public function getJoinUser($data)
+	{
+		$query = $this->db->select()->from('USER')->join('COMPANY', 'COMPANY.COMPANY_ID = USER.COMPANY_ID')
+		->where('USER_ID', $data)->get()->row();
+
+		return $query;
 	}
 
 	public function getChildById($data, $table)

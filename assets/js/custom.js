@@ -7,8 +7,9 @@
 
 "use strict";
 
-let _baseUrl = 'https://pklonline.net/api/'
-// let _baseUrl = 'http://localhost/pkl-online/api/'
+// let _baseUrl = 'https://pklonline.net/api/'
+let _baseUrl = 'http://localhost/pkl-online/api/'
+let _baseUrlOrigin = 'http://localhost/pkl-online/'
 
 $(document).ready(() => {
 
@@ -88,3 +89,45 @@ function setPicked(e) {
     else
         e.removeClass('border border-primary')
  }
+
+function logout() {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Keluar',
+        text: "apakah anda yakin ingin keluar?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Iya',
+        cancelButtonText: 'Tidak',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = _baseUrlOrigin + "home/logout"
+        }
+      })
+}
+
+$("#products-carousel").owlCarousel({
+    items: 3,
+    margin: 10,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    loop: true,
+    responsive: {
+      0: {
+        items: 2
+      },
+      768: {
+        items: 2
+      },
+      1200: {
+        items: 3
+      }
+    }
+  });

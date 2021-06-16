@@ -91,6 +91,7 @@ function editUserInstitution(id) {
                 $('#fullname').val(response.data.USER_FULLNAME)
                 $('#email').val(response.data.USER_EMAIL)
                 $('#phone').val(response.data.USER_PHONE)
+                $('#target').val(response.data.TARGET)
                 if (response.data.COMPANY_ID != null)
                     $('#company').val(response.data.COMPANY_ID)
 

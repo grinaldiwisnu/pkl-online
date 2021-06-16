@@ -120,6 +120,9 @@ $this->load->view('dist/_partials/header');
                       <?php endforeach; ?>
                     </select>
                   </div>
+                  <div class="form-group">
+                        <label>Gambar</label>
+                  </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

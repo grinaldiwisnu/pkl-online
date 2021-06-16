@@ -30,8 +30,15 @@ class Home extends CI_Controller {
             );
             $this->load->view('dist/index-admin', $data);
         } else {
+            $totalProduct = $this->API->getProductRow($this->session->userdata('id'));
+            $totalSelling = $this->API->getSellingRow($this->session->userdata('id'));
+            $user = $this->API->getJoinUser($this->session->userdata('id'));
+
             $data = array(
-                'title' => "Dashboard"
+                'title' => "Dashboard",
+                'total_product' => $totalProduct,
+                'total_selling' => $totalSelling,
+                'user' => $user
             );
             $this->load->view('dist/index', $data);
         }

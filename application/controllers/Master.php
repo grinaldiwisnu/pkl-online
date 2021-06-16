@@ -54,6 +54,16 @@ class Master extends CI_Controller {
         $this->load->view('dist/modules-company-admin', $data);
     }
 
+    public function category()
+    {
+        $category = $this->API->get('PRODUCT_CATEGORY');
+        $data = array(
+            'title' => "Master Kategori Produk",
+            'category' => $category,
+        );
+        $this->load->view('dist/modules-category-admin', $data);
+    }
+
     public function add_institution()
     {
         $institution_name = $this->input->post('name');
@@ -197,8 +207,9 @@ class Master extends CI_Controller {
         $user_email = $this->input->post('email');
         $user_phone = $this->input->post('phone');
         $company_id = $this->input->post('company');
+        $target = $this->input->post('target');
 
-        if (empty($id) || empty($user_fullname) || empty($user_email) || empty($user_phone) || empty($company_id)) {
+        if (empty($id) || empty($user_fullname) || empty($user_email) || empty($user_phone) || empty($company_id) || empty($target)) {
             echo json_encode(
                 array('status' => false, 'message' => 'Field are empty', 'data' => null)
             );
@@ -209,6 +220,7 @@ class Master extends CI_Controller {
                 'USER_EMAIL' => $user_email, 
                 'USER_PHONE' => $user_phone,
                 'COMPANY_ID' => $company_id,
+                'TARGET'     => $target
             );
 
             $result = $this->API->update($param, $data, 'USER');
