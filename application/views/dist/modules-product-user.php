@@ -33,7 +33,7 @@ $this->load->view('dist/_partials/header');
 
           <div class="section-body">
             <h2 class="section-title">Daftar Produk Saya 
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i>&nbsp; Pilih Produk Saya</button>
+            <a href="<?= base_url(); ?>product/add" class="btn btn-primary float-right"><i class="fas fa-plus"></i>&nbsp; Pilih Produk Saya</a>
             </h2>
             
             <div class="row">
@@ -63,8 +63,8 @@ $this->load->view('dist/_partials/header');
                                 <?= $no; ?>
                               </td>
                               <td><?= $key->REFF_ID; ?></td>
-                              <td><?= $key->PRODUCT->PRODUCT_NAME; ?></td>
-                              <td><?= $key->PRODUCT->PRODUCT_PRICE; ?></td>
+                              <td><?= $key->PRODUCT[0]->PRODUCT_NAME; ?></td>
+                              <td>Rp<?= number_format($key->PRODUCT[0]->PRODUCT_PRICE); ?></td>
                               <td><?= $key->REFF_STATUS; ?></td>
                               <td>
                               <a href="javascript:void(0)" class="btn btn-danger btn-sm delete-company" onclick="deleteProductSelect(<?= $key->REFF_ID; ?>)"><i class="fas fa-trash"></i></a>
@@ -90,35 +90,5 @@ $this->load->view('dist/_partials/header');
           </div>
         </section>
       </div>
-
-      <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Tambah Produk</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form id="add-product">
-                <div class="modal-body">
-                    <ul class="list-unstyled">
-                      <li class="media p-2" onclick="setPicked(this)" val="1">
-                        <img class="mr-3" src="assets/img/example-image.jpg" width="100" alt="Generic placeholder image">
-                        <div class="media-body">
-                          <h5 class="mt-0 mb-1">List-based media object</h5>
-                          <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus oringilla. Donec lacinia congue felis in faucibus.</p>
-                        </div>
-                      </li>
-                    </ul>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                  <button type="submit" class="btn btn-primary">Pilih Produk</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
 
 <?php $this->load->view('dist/_partials/footer'); ?>

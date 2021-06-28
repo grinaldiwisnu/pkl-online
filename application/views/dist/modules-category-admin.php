@@ -42,7 +42,7 @@ $this->load->view('dist/_partials/header');
                             <td><?= $no; ?></td>
                             <td><?= $key->CATEGORY_NAME; ?></td>
                             <td><?= $key->CATEGORY_STATUS == 0 ? "Tidak Aktif" : "Aktif"; ?></td>
-                            <td><a href="javascript:void(0)" class="btn btn-warning btn-sm edit-category" onclick="editCompany(<?= $key->CATEGORY_ID; ?>)"><i class="fas fa-edit"></i></a></td>
+                            <td><a href="javascript:void(0)" class="btn btn-warning btn-sm edit-category" onclick="editCategory(<?= $key->CATEGORY_ID; ?>)"><i class="fas fa-edit"></i></a></td>
                           </tr>
                           <?php $no++; endforeach; ?>
                         </tbody>

@@ -92,7 +92,7 @@ $this->load->view('dist/_partials/header');
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form id="add-product">
+              <form id="add-product" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Nama Produk</label>
@@ -122,6 +122,7 @@ $this->load->view('dist/_partials/header');
                   </div>
                   <div class="form-group">
                         <label>Gambar</label>
+                        <input type="file" name="image">
                   </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

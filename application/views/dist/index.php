@@ -33,7 +33,7 @@ $this->load->view('dist/_partials/header');
                         <h4>Sales</h4>
                       </div>
                       <div class="card-body">
-                        <?= $total_product; ?>/<?= $user->TARGET; ?>
+                        <?= $total_selling; ?>/<?= $user->TARGET; ?>
                       </div>
                     </div>
                   </div>
@@ -45,69 +45,22 @@ $this->load->view('dist/_partials/header');
                 </div>
                 <div class="card-body">
                   <div class="owl-carousel owl-theme" id="products-carousel">
-                    <div>
-                      <div class="product-item pb-3">
-                        <div class="product-image">
-                          <img alt="image" src="<?= base_url(); ?>/assets/img/products/product-4-50.png" class="img-fluid">
+                    <?php foreach ($products as $key): ?>
+                      <div>
+                        <div class="product-item pb-3">
+                          <div class="product-image">
+                            <img alt="image" src="<?= $key->IMAGE == null ? base_url().'assets/img/news/img07.jpg' : base_url().'upload/products/'.$key->IMAGE->PRODUCT_IMAGE_NAME; ?>" class="img-fluid">
+                          </div>
+                          <div class="product-details">
+                            <div class="product-name"><?= $key->PRODUCT_NAME; ?></div>
+                            <div class="text-muted text-small">Rp<?= number_format($key->PRODUCT_PRICE); ?></div>
+                            <div class="product-cta">
+                              <a href="#" class="btn btn-primary">Pilih Produk</a>
+                            </div>
+                          </div>  
                         </div>
-                        <div class="product-details">
-                          <div class="product-name">iBook Pro 2018</div>
-                          <div class="product-review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                          </div>
-                          <div class="text-muted text-small">67 Sales</div>
-                          <div class="product-cta">
-                            <a href="#" class="btn btn-primary">Detail</a>
-                          </div>
-                        </div>  
                       </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="product-image">
-                          <img alt="image" src="<?= base_url(); ?>/assets/img/products/product-3-50.png" class="img-fluid">
-                        </div>
-                        <div class="product-details">
-                          <div class="product-name">oPhone S9 Limited</div>
-                          <div class="product-review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half"></i>
-                          </div>
-                          <div class="text-muted text-small">86 Sales</div>
-                          <div class="product-cta">
-                            <a href="#" class="btn btn-primary">Detail</a>
-                          </div>
-                        </div>  
-                      </div>
-                    </div>
-                    <div>
-                      <div class="product-item">
-                        <div class="product-image">
-                          <img alt="image" src="<?= base_url(); ?>/assets/img/products/product-1-50.png" class="img-fluid">
-                        </div>
-                        <div class="product-details">
-                          <div class="product-name">Headphone Blitz</div>
-                          <div class="product-review">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                          </div>
-                          <div class="text-muted text-small">63 Sales</div>
-                          <div class="product-cta">
-                            <a href="#" class="btn btn-primary">Detail</a>
-                          </div>
-                        </div>  
-                      </div>
-                    </div>
+                    <?php endforeach; ?>
                   </div>
                 </div>
               </div>

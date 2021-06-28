@@ -107,7 +107,7 @@ class API_Model extends CI_Model {
 	{
 		$query = $this->db->insert($table, $data);
 		if ($query) {
-			return true;
+			return $this->db->insert_id();
 		} else {
 			return false;
 		}
@@ -150,6 +150,17 @@ class API_Model extends CI_Model {
 		}
 	}
 
+	public function getFirstChildById($data, $table)
+	{
+		$query = $this->db->where($data)->get($table)->row();
+		
+		if ($query) {
+			return $query;
+		} else {
+			return [];
+		}
+	}
+
 	public function update($where, $data, $table)
 	{
 		$query = $this->db->where($where)->update($table, $data);
@@ -170,6 +181,12 @@ class API_Model extends CI_Model {
 		} else {
 			return false;
 		}
+	}
+
+	public function getProductDistinct($id, $companyId)
+	{
+		$query = $this->db->query("SELECT * FROM PRODUCT WHERE COMPANY_ID = $companyId AND PRODUCT_ID NOT IN (SELECT PRODUCT_ID FROM USER_PRODUCT WHERE USER_ID = $id)");
+		return $query->result();
 	}
 }
 

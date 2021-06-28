@@ -56,7 +56,7 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 }elseif ($this->uri->segment(2) == "components_user") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/owlcarousel2/dist/owl.carousel.min.js"></script>
 <?php
-}elseif ($this->uri->segment(2) == "forms_advanced_form") { ?>
+}elseif ($this->uri->segment(1) == "transaction") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/cleave-js/dist/cleave.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/cleave-js/dist/addons/cleave-phone.us.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
@@ -64,7 +64,6 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
   <script src="<?php echo base_url(); ?>assets/modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-  <script src="<?php echo base_url(); ?>assets/modules/select2/dist/js/select2.full.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/jquery-selectric/jquery.selectric.min.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "forms_editor") { ?>
@@ -85,6 +84,7 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 <?php
 }elseif ($this->uri->segment(1) == "master" || $this->uri->segment(2) == "") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/master.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/select2/dist/js/select2.full.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/modules/owlcarousel2/dist/owl.carousel.min.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "modules_owl_carousel") { ?>
@@ -139,6 +139,7 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 <?php
 if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/index.js"></script>
+  <script src="<?php echo base_url(); ?>assets/modules/select2/dist/js/select2.full.min.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "index_0") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/index-0.js"></script>
@@ -194,8 +195,8 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") { ?>
 }elseif ($this->uri->segment(2) == "modules_chartjs") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/modules-chartjs.js"></script>
 <?php
-}elseif ($this->uri->segment(1) == "master" || $this->uri->segment(1) == "product") { ?>
-  
+}elseif ($this->uri->segment(1) == "master" || $this->uri->segment(1) == "product" || $this->uri->segment(1) == "transaction") { ?>
+  <script src="<?php echo base_url(); ?>assets/modules/select2/dist/js/select2.full.min.js"></script>
 <?php
 }elseif ($this->uri->segment(2) == "modules_ion_icons") { ?>
   <script src="<?php echo base_url(); ?>assets/js/page/modules-ion-icons.js"></script>

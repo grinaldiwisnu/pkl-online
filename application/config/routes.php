@@ -61,6 +61,10 @@ $route['api/auth/register'] = 'API/registerAPI';
 $route['master/institution/detail/:num'] = 'Master/detail_institution';
 $route['master/company/detail/:num'] = 'Master/detail_company';
 $route['product'] = 'Home/product';
+$route['product/add'] = 'Home/product_add';
+
+// API USER
+$route['api/product/add/myproduct'] = 'Home/add_product';
 
 // Institution Master Endpoint
 $route['api/institution/all'] = 'API/getInstitutionAPI';
@@ -87,3 +91,8 @@ $route['api/master/delete/product/:num'] = 'Master/delete_product';
 $route['api/master/get/user/:num'] = 'Master/get_user_institution';
 $route['api/master/update/user'] = 'Master/update_user_institution';
 $route['api/master/delete/user/:num'] = 'Master/delete_user_institution';
+
+// Category Master Endpoint
+$route['api/master/add/category'] = 'Master/add_category';
+$route['api/master/get/category/:num'] = 'Master/get_category';
+$route['api/master/update/category'] = 'Master/update_category';

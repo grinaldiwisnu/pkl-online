@@ -163,16 +163,19 @@ $("#update-company").on("submit", (e) => {
     });
 })
 
-$("#add-product").on("submit", (e) => {
+$("#add-product").submit(function(e) {
     e.preventDefault()
 
     let data = $("#add-product").serialize()
-
+    var formData = new FormData(this)
     $.ajax({
         type: "POST",
-        dataType: "JSON",
         url: _baseUrl + "/master/add/product",
-        data: data,
+        data: formData,
+        processData:false,
+        contentType:false,
+        cache:false,
+        async:false,
         success: function (response) {
             if (response.status) {
                 window.location.reload()
@@ -232,6 +235,82 @@ function deleteProduct(id) {
             type: "GET",
             dataType: "JSON",
             url: _baseUrl + "/master/delete/product/" + id,
+            success: function (response) {
+                if (response.status) {
+                    window.location.reload()
+                } else {
+                    alert(response.message)
+                }
+            }
+        });
+    }
+}
+
+$("#add-category").on("submit", (e) => {
+    e.preventDefault()
+
+    let data = $("#add-category").serialize()
+
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: _baseUrl + "/master/add/category",
+        data: data,
+        success: function (response) {
+            if (response.status) {
+                window.location.reload()
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+})
+
+$("#update-category").on("submit", (e) => {
+    e.preventDefault()
+
+    let data = $("#update-category").serialize()
+
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: _baseUrl + "/master/update/category",
+        data: data,
+        success: function (response) {
+            if (response.status) {
+                window.location.reload()
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+})
+
+function editCategory(id) {
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: _baseUrl + "/master/get/category/" + id,
+        success: function (response) {
+            if (response.status) {
+                $('#id').val(response.data.CATEGORY_ID)
+                $('#name').val(response.data.CATEGORY_NAME)
+
+                $('#editModal').modal('show')
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+}
+
+function deleteCategory(id) {
+    
+    if (confirm('Ingin mengapus category')) {
+        $.ajax({
+            type: "GET",
+            dataType: "JSON",
+            url: _baseUrl + "/master/delete/category/" + id,
             success: function (response) {
                 if (response.status) {
                     window.location.reload()

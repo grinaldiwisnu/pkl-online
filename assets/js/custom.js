@@ -84,7 +84,8 @@ $(document).ready(() => {
 })
 
 function setPicked(e) {
-    if (e.hasClass('border border-primary'))
+    console.log(e)
+    if (!e.hasClass('border border-primary'))
         e.addClass('border border-primary')
     else
         e.removeClass('border border-primary')
@@ -131,3 +132,38 @@ $("#products-carousel").owlCarousel({
       }
     }
   });
+
+  function selectProduct(id, name) {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: name,
+        text: "apakah anda ingin memilih produk ini?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Iya',
+        cancelButtonText: 'Tidak',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                dataType: "JSON",
+                url: _baseUrl + "product/add/myproduct",
+                data: {id: id},
+                success: function (response) {
+                    if (response.status) {
+                        window.location.href = _baseUrlOrigin + "product"
+                    } else {
+                        alert(response.message)
+                    }
+                }
+            });
+        }
+      })
+}
