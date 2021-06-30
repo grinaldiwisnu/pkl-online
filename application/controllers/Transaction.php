@@ -10,7 +10,7 @@ class Transaction extends CI_Controller {
         if (!$this->session->userdata('login')) {
             redirect('auth','refresh');
         }
-        $this->load->model('Transaction_model', 'Transaction');
+        $this->load->model('Transaction_Model', 'Transaction');
         $this->load->model('API_model', 'API');
     }
 
