@@ -435,6 +435,7 @@ class Master extends CI_Controller {
                     array('status' => false, 'message' => "Data not found $id", 'data' => null)
                 );
             } else {
+                $result->IMAGE = $this->API->getById(array('PRODUCT_ID' => $id), 'PRODUCT_IMAGE');
                 echo json_encode(
                     array('status' => true, 'message' => 'Get data product by id success', 'data' => $result)
                 );
@@ -456,24 +457,47 @@ class Master extends CI_Controller {
                 array('status' => false, 'message' => 'Field are empty', 'data' => null)
             );
         } else {
-            $param = array('PRODUCT_ID' => $id);
-            $data = array(
-                'PRODUCT_NAME' => $productName,
-                'PRODUCT_DESCRIPTION' => $productDesc,
-                'PRODUCT_PRICE' => $productPrice,
-                'PRODUCT_STOCK' => $productStock,
-                'CATEGORY_ID' => $productCategory,
-            );
+            $config['upload_path']="./upload/products"; //path folder file upload
+            $config['allowed_types']='gif|jpg|png'; //type file yang boleh di upload
+            $config['encrypt_name'] = TRUE; //enkripsi file name upload
 
-            $result = $this->API->update($param, $data, 'PRODUCT');
-            if ($result) {
-                echo json_encode(
-                    array('status' => true, 'message' => 'Update product success', 'data' => $data)
+            $this->load->library('upload',$config); //call library upload 
+            if($this->upload->do_upload("image")){ //upload file
+                $data = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+    
+                $judul= $this->input->post('judul'); //get judul image
+                $image= $data['upload_data']['file_name']; //set file name ke variable image
+
+                $param = array('PRODUCT_ID' => $id);
+                $data = array(
+                    'PRODUCT_NAME' => $productName,
+                    'PRODUCT_DESCRIPTION' => $productDesc,
+                    'PRODUCT_PRICE' => $productPrice,
+                    'PRODUCT_STOCK' => $productStock,
+                    'CATEGORY_ID' => $productCategory,
                 );
+
+                $result = $this->API->update($param, $data, 'PRODUCT');
+                if ($result) {
+                    $find = $this->API->getById(array('PRODUCT_ID' => $id), 'PRODUCT_IMAGE');
+                    if (!empty($find))
+                        $result = $this->API->update(array('PRODUCT_ID' => $id), array('PRODUCT_IMAGE_NAME' => $image), 'PRODUCT_IMAGE');
+                    else
+                        $result = $this->API->insert(array('PRODUCT_IMAGE_NAME' => $image, 'PRODUCT_ID' => $id), 'PRODUCT_IMAGE');
+                    if ($result) {
+                        echo json_encode(
+                            array('status' => true, 'message' => 'Update product success', 'data' => $data)
+                        );
+                    }
+                } else {
+                    echo json_encode(
+                        array('status' => false, 'message' => 'Failed to update data with id ' + $id, 'data' => null)
+                    ); 
+                }
             } else {
                 echo json_encode(
-                    array('status' => false, 'message' => 'Failed to update data with id ' + $id, 'data' => null)
-                ); 
+                    array('status' => false, 'message' => 'Failed to upload image for product', 'data' => null)
+                );
             }
         }
     }

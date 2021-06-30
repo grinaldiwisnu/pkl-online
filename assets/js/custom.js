@@ -8,9 +8,9 @@
 "use strict";
 
 let _baseUrl = 'https://pklonline.net/api/'
+let _baseUrlOrigin = 'https://pklonline.net/'
 // let _baseUrl = 'http://localhost/pkl-online/api/'
 // let _baseUrlOrigin = 'http://localhost/pkl-online/'
-let _baseUrlOrigin = 'https://pklonline.net/'
 
 $(document).ready(() => {
 
@@ -116,22 +116,9 @@ function logout() {
 }
 
 $("#products-carousel").owlCarousel({
-    items: 3,
     margin: 10,
     autoplay: true,
-    autoplayTimeout: 5000,
-    loop: true,
-    responsive: {
-      0: {
-        items: 2
-      },
-      768: {
-        items: 2
-      },
-      1200: {
-        items: 3
-      }
-    }
+    autoplayTimeout: 3000,
   });
 
   function selectProduct(id, name) {

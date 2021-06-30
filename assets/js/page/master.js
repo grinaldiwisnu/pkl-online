@@ -186,16 +186,19 @@ $("#add-product").submit(function(e) {
     });
 })
 
-$("#update-product").on("submit", (e) => {
+$("#update-product").submit(function(e) {
     e.preventDefault()
 
-    let data = $("#update-product").serialize()
-
+    var formData = new FormData(this)
     $.ajax({
         type: "POST",
         dataType: "JSON",
         url: _baseUrl + "/master/update/product",
-        data: data,
+        data: formData,
+        processData:false,
+        contentType:false,
+        cache:false,
+        async:false,
         success: function (response) {
             if (response.status) {
                 window.location.reload()
@@ -213,12 +216,18 @@ function editProduct(id) {
         url: _baseUrl + "/master/get/product/" + id,
         success: function (response) {
             if (response.status) {
+                let img = _baseUrlOrigin + "assets/img/news/img09.jpg"
+                if (response.data.IMAGE != null) {
+                    img = _baseUrlOrigin + "upload/products/" + response.data.IMAGE.PRODUCT_IMAGE_NAME
+                }
                 $('#id').val(response.data.PRODUCT_ID)
                 $('#name').val(response.data.PRODUCT_NAME)
                 $('#stock').val(response.data.PRODUCT_STOCK)
                 $('#price').val(response.data.PRODUCT_PRICE)
                 $('#desc').val(response.data.PRODUCT_DESCRIPTION)
                 $('#category').val(response.data.CATEGORY_ID)
+                $('.gallery-item').attr("data-image", img)
+                $('.gallery-item').attr("style", "height: 350px; background-image: url('"+ img +"');")
 
                 $('#editModal').modal('show')
             } else {

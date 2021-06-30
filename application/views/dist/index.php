@@ -33,12 +33,14 @@ $this->load->view('dist/_partials/header');
                         <h4>Sales</h4>
                       </div>
                       <div class="card-body">
-                        <?= $total_selling; ?>/<?= $user->TARGET; ?>
+                        <?= $total_selling; ?>/<?= !empty($user->TARGET) ? $user->TARGET : "0"; ?>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <?php if (!empty($user->COMPANY_ID)): ?>
               <div class="card">
                 <div class="card-header">
                   <h4>Produk Rekomendasi <?= ucwords(strtolower($user->COMPANY_NAME)); ?></h4>
@@ -64,6 +66,7 @@ $this->load->view('dist/_partials/header');
                   </div>
                 </div>
               </div>
+              <?php endif; ?>
               <div class="card">
                 <div class="card-header">
                   <h4>Transaksi</h4>

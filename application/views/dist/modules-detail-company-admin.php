@@ -142,7 +142,7 @@ $this->load->view('dist/_partials/header');
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form id="update-product">
+              <form id="update-product" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                   <div class="form-group">
                     <label>Nama Produk</label>
@@ -163,12 +163,19 @@ $this->load->view('dist/_partials/header');
                   </div>
                   <div class="form-group">
                     <label>Kategori</label>
-                    <select name="company" id="company" class="form-control">
+                    <select name="category" id="category" class="form-control">
                         <option value="">Pilih kategori produk</option>
                         <?php foreach($category as $key) : ?>
                         <option value="<?= $key->CATEGORY_ID; ?>"><?= $key->CATEGORY_NAME; ?></option>
                       <?php endforeach; ?>
                     </select>
+                  </div>
+                  <div class="form-group">
+                        <label>Gambar</label>
+                        <input type="file" name="image">
+                  </div>
+                  <div class="gallery gallery-fw" data-item-height="350">
+                    <div id="img-product" class="gallery-item" data-image="" data-title="Image 1"></div>
                   </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

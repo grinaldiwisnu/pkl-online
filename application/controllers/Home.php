@@ -33,10 +33,12 @@ class Home extends CI_Controller {
             $totalProduct = $this->API->getProductRow($this->session->userdata('id'));
             $totalSelling = $this->API->getSellingRow($this->session->userdata('id'));
             $user = $this->API->getJoinUser($this->session->userdata('id'));
-            $products = $this->API->getProductDistinct($this->session->userdata('id'), $user->COMPANY_ID);
-
-            for ($i=0; $i < count($products); $i++) { 
-                $products[$i]->IMAGE = $this->API->getFirstChildById(array('PRODUCT_ID' => $products[$i]->PRODUCT_ID), 'PRODUCT_IMAGE');
+            $products = [];
+            if (!empty($user->COMPANY_ID)) {
+                $products = $this->API->getProductDistinct($this->session->userdata('id'), $user->COMPANY_ID);
+                for ($i=0; $i < count($products); $i++) { 
+                    $products[$i]->IMAGE = $this->API->getFirstChildById(array('PRODUCT_ID' => $products[$i]->PRODUCT_ID), 'PRODUCT_IMAGE');
+                }
             }
             $data = array(
                 'title' => "Dashboard",
@@ -55,9 +57,12 @@ class Home extends CI_Controller {
         if (!$isAdmin) {
             $totalProduct = $this->API->getProductRow($this->session->userdata('id'));
             $user = $this->API->getById(array('USER_ID' => $this->session->userdata('id')), 'USER');
-            $products = $this->API->getChildById(array('USER_ID' => $this->session->userdata('id')), 'USER_PRODUCT');
-            for ($i=0; $i < count($products); $i++) { 
-                $products[$i]->PRODUCT = $this->API->getChildById(array('PRODUCT_ID' => $products[$i]->PRODUCT_ID), 'PRODUCT');
+            $products = [];
+            if (!empty($user->COMPANY_ID)) {
+                $products = $this->API->getChildById(array('USER_ID' => $this->session->userdata('id')), 'USER_PRODUCT');
+                for ($i=0; $i < count($products); $i++) { 
+                    $products[$i]->PRODUCT = $this->API->getChildById(array('PRODUCT_ID' => $products[$i]->PRODUCT_ID), 'PRODUCT');
+                }
             }
 
             $data = array(
