@@ -11,7 +11,7 @@ class Transaction extends CI_Controller {
             redirect('auth','refresh');
         }
         $this->load->model('Transaction_Model', 'Transaction');
-        $this->load->model('API_model', 'API');
+        $this->load->model('API_Model', 'API');
     }
 
     public function index()
