@@ -62,6 +62,7 @@ $route['master/institution/detail/:num'] = 'Master/detail_institution';
 $route['master/company/detail/:num'] = 'Master/detail_company';
 $route['product'] = 'Home/product';
 $route['product/add'] = 'Home/product_add';
+$route['history'] = 'Transaction/history';
 
 // API USER
 $route['api/product/add/myproduct'] = 'Home/add_product';

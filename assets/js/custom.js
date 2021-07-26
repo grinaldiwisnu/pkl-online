@@ -7,10 +7,10 @@
 
 "use strict";
 
-let _baseUrl = 'https://pklonline.net/api/'
-let _baseUrlOrigin = 'https://pklonline.net/'
-// let _baseUrl = 'http://localhost/pkl-online/api/'
-// let _baseUrlOrigin = 'http://localhost/pkl-online/'
+// let _baseUrl = 'https://pklonline.net/api/'
+// let _baseUrlOrigin = 'https://pklonline.net/'
+let _baseUrl = 'http://localhost/pkl-online/api/'
+let _baseUrlOrigin = 'http://localhost/pkl-online/'
 
 $(document).ready(() => {
 
@@ -34,53 +34,63 @@ $(document).ready(() => {
         e.preventDefault();
         $('#register-success').hide()
         $('#register-failed').hide()
+        $('#submit').addClass('btn-progress')
 
-        $.ajax({
-            type: "POST",
-            url: _baseUrl + "auth/register",
-            data: $('#form-register').serialize(),
-            dataType: "json",
-            success: function (response) {
-                console.log(response.data);
-                if (response.status) {
-                    $('#register-success').html(response.message)
-                    $('#register-success').show()
-                    setTimeout(() => {
-                        window.history.back
-                    }, 2000);
-                } else {
-                    $('#register-failed').html(response.message)
-                    $('#register-failed').show()
+        setTimeout(() => {
+            $.ajax({
+                type: "POST",
+                url: _baseUrl + "auth/register",
+                data: $('#form-register').serialize(),
+                dataType: "json",
+                success: function (response) {
+                    console.log(response.data);
+                    if (response.status) {
+                        $('#register-success').html(response.message)
+                        $('#register-success').show()
+                        $('#submit').removeClass('btn-progress')
+                        setTimeout(() => {
+                            window.history.back
+                        }, 2000);
+                    } else {
+                        $('#register-failed').html(response.message)
+                        $('#register-failed').show()
+                        $('#submit').removeClass('btn-progress')
+                    }
                 }
-            }
-        });
+            });
+        }, 1000);
     });
     
     $('#form-login').on('submit', function(e) {
         e.preventDefault();
         $('#login-success').hide()
         $('#login-failed').hide()
+        $('#submit').addClass('btn-progress')
 
-        $.ajax({
-            type: "POST",
-            url: _baseUrl + "auth/login",
-            data: $('#form-login').serialize(),
-            dataType: "json",
-            success: function (response) {
-                console.log(response.data);
-                if (response.status) {
-                    $('#login-success').html(response.message)
-                    $('#login-success').show()
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 2000);
-                    
-                } else {
-                    $('#login-failed').html(response.message)
-                    $('#login-failed').show()
+        setTimeout(() => {
+            $.ajax({
+                type: "POST",
+                url: _baseUrl + "auth/login",
+                data: $('#form-login').serialize(),
+                dataType: "json",
+                success: function (response) {
+                    console.log(response.data);
+                    if (response.status) {
+                        $('#login-success').html(response.message)
+                        $('#login-success').show()
+                        $('#submit').removeClass('btn-progress')
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000);
+                        
+                    } else {
+                        $('#login-failed').html(response.message)
+                        $('#login-failed').show()
+                        $('#submit').removeClass('btn-progress')
+                    }
                 }
-            }
-        });
+            });
+        }, 1000);
     });
 })
 

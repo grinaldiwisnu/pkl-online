@@ -15,6 +15,33 @@ class Transaction_Model extends CI_Model {
         }
     }
 
+    public function checkInPaymentTrans()
+    {
+        $id = $this->session->userdata('id');
+        $query = $this->db->where('TRANSACTION_STATUS <', 2)->get('TRANSACTION');
+        if ($query->num_rows() > 3) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function createTrans($data)
+    {
+        $query = $this->db->insert('TRANSACTION', $data);
+        if ($query) {
+            return $this->db->insert_id();
+        } else {
+            return false;
+        }
+    }
+
+    public function getTransacions()
+    {
+        $id = $this->session->userdata('id');
+        $query = $this->db->where(array('USER_ID' => $id))->order_by('TRANSACTION_DATE', 'ASC')->get('TRANSACTION');
+        return $query->result();
+    }
 }
 
 /* End of file Transaction_Model.php */

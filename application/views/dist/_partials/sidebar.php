@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <li class="menu-header">Menu</li>
             <li class="<?php echo $this->uri->segment(1) == 'product' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>product"><i class="fa fa-grip-horizontal"></i> <span>Produk Saya</span></a></li>
             <li class="<?php echo $this->uri->segment(1) == 'transaction' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>transaction"><i class="fa fa-shopping-cart"></i> <span>Pembelian</span></a></li>
-            <li class="<?php echo $this->uri->segment(1) == 'blank' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
+            <li class="<?php echo $this->uri->segment(1) == 'history' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>history"><i class="fa fa-history"></i> <span>Riwayat</span></a></li>
             <?php elseif ($this->session->userdata('admin')) : ?>
             <li class="menu-header">Admin Menu</li>
             <li class="<?php echo $this->uri->segment(2) == 'company' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url('master/company'); ?>"><i class="fa fa-hotel"></i> <span>Perusahaan</span></a></li>

@@ -48,22 +48,27 @@ class API extends CI_Controller {
 		$institution = $this->input->post('institution');
 
 		if ($email == '' || $password == '' || $name == '' || $phone == '' || $institution == '') {
-			$this->msg = array('status' => false, 'message' => 'Payload empty', 'data' => null);
+			$this->msg = array('status' => false, 'message' => 'Data registrasi masih kosong', 'data' => null);
 		} else {
-			$data = array(
-				'USER_FULLNAME' => $name,
-				'USER_EMAIL' => $email, 
-				'USER_PASSWORD' => $password,
-				'USER_PHONE' => $phone,
-				'USER_STATUS' => 10,
-				'INSTITUTION_ID' => $institution,
-			);
-
-			if ( $do = $this->API->Register($data)) {
-				$this->msg = array('status' => true, 'message' => 'User created', 'data' => $data);
+			if ($this->API->checkEmail($email)) {
+				$this->msg = array('status' => false, 'message' => 'Email sudah digunakan', 'data' => null);
 			} else {
-				$this->msg = array('status' => false, 'message' => 'Internal server error', 'data' => null);
+				$data = array(
+					'USER_FULLNAME' => $name,
+					'USER_EMAIL' => $email, 
+					'USER_PASSWORD' => $password,
+					'USER_PHONE' => $phone,
+					'USER_STATUS' => 10,
+					'INSTITUTION_ID' => $institution,
+				);
+	
+				if ( $do = $this->API->Register($data)) {
+					$this->msg = array('status' => true, 'message' => 'User created', 'data' => $data);
+				} else {
+					$this->msg = array('status' => false, 'message' => 'Internal server error', 'data' => null);
+				}
 			}
+			
 		}
 
 		echo json_encode($this->msg);

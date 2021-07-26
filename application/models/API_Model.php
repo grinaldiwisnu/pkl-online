@@ -14,6 +14,16 @@ class API_Model extends CI_Model {
 		}
     }
 
+	public function checkEmail($email)
+    {
+        $query = $this->db->where('USER_EMAIL', $email)->get('USER');
+		if ($this->db->affected_rows() == 1) {
+			return true;
+		} else {
+			return false;
+		}
+    }
+
 	public function authAdmin($params)
     {
         $query = $this->db->where($params)->get('ADMIN');
