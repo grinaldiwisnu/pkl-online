@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 21, 2021 at 06:24 PM
+-- Generation Time: Jul 28, 2021 at 05:49 AM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.12
 
@@ -113,6 +113,14 @@ CREATE TABLE `PRODUCT` (
   `CATEGORY_ID` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `PRODUCT`
+--
+
+INSERT INTO `PRODUCT` (`PRODUCT_ID`, `PRODUCT_NAME`, `PRODUCT_DESCRIPTION`, `PRODUCT_PRICE`, `PRODUCT_STOCK`, `COMPANY_ID`, `CATEGORY_ID`) VALUES
+(1, 'Pisang Goreng', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 2931831, 129, 3, 1),
+(3, 'IAIN Tulungagung', 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.', 123112312, 131, 3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -121,18 +129,20 @@ CREATE TABLE `PRODUCT` (
 
 CREATE TABLE `PRODUCT_CATEGORY` (
   `CATEGORY_ID` smallint(6) NOT NULL,
-  `CATEGORY_NAME` varchar(45) NOT NULL
+  `CATEGORY_NAME` varchar(45) NOT NULL,
+  `CATEGORY_STATUS` smallint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `PRODUCT_CATEGORY`
 --
 
-INSERT INTO `PRODUCT_CATEGORY` (`CATEGORY_ID`, `CATEGORY_NAME`) VALUES
-(1, 'Makanan'),
-(2, 'Sandal'),
-(3, 'Sepatu'),
-(4, 'Baju');
+INSERT INTO `PRODUCT_CATEGORY` (`CATEGORY_ID`, `CATEGORY_NAME`, `CATEGORY_STATUS`) VALUES
+(1, 'Makanan', 1),
+(2, 'Sandal', 1),
+(3, 'Sepatu', 1),
+(4, 'Baju', 1),
+(5, 'Frozen Food', 1);
 
 -- --------------------------------------------------------
 
@@ -146,6 +156,14 @@ CREATE TABLE `PRODUCT_IMAGE` (
   `PRODUCT_ID` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `PRODUCT_IMAGE`
+--
+
+INSERT INTO `PRODUCT_IMAGE` (`PRODUCT_IMAGE_ID`, `PRODUCT_IMAGE_NAME`, `PRODUCT_ID`) VALUES
+(1, 'ec7e18e14b779bad9cee491ea91cd20b.png', 3),
+(2, '2d515413a644809af36c31e39583af18.png', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -153,10 +171,14 @@ CREATE TABLE `PRODUCT_IMAGE` (
 --
 
 CREATE TABLE `TRANSACTION` (
-  `TRANSACTION_ID` varchar(45) NOT NULL,
+  `TRANSACTION_ID` int(45) NOT NULL,
   `TRANSACTION_DATE` datetime NOT NULL,
   `TRANSACTION_CODE` varchar(45) NOT NULL,
   `TRANSACTION_STATUS` smallint(6) NOT NULL,
+  `TRANSACTION_ADDRESS` text NOT NULL,
+  `TRANSACTION_NOTE` text NOT NULL,
+  `TRANSACTION_QTY` int(11) NOT NULL,
+  `TRANSACTION_REFERENCE` text NOT NULL,
   `REFF_ID` varchar(45) NOT NULL,
   `USER_ID` smallint(6) NOT NULL,
   `PRODUCT_ID` smallint(6) NOT NULL,
@@ -182,15 +204,16 @@ CREATE TABLE `USER` (
   `USER_IDENTIFICATION` varchar(45) DEFAULT NULL,
   `USER_NISN` varchar(45) DEFAULT NULL,
   `INSTITUTION_ID` smallint(6) NOT NULL,
-  `COMPANY_ID` smallint(6) DEFAULT NULL
+  `COMPANY_ID` smallint(6) DEFAULT NULL,
+  `TARGET` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `USER`
 --
 
-INSERT INTO `USER` (`USER_ID`, `USER_FULLNAME`, `USER_EMAIL`, `USER_PHONE`, `USER_PASSWORD`, `USER_AVATAR`, `USER_BORNDATE`, `USER_CREATEDATE`, `USER_STATUS`, `USER_IDENTIFICATION`, `USER_NISN`, `INSTITUTION_ID`, `COMPANY_ID`) VALUES
-(1, 'Grinaldi Wisnu', 'grinaldifoc@gmail.com', '082244949484', '123456', NULL, NULL, '2021-04-03 03:54:07', 10, NULL, '3192313821312', 12, 4);
+INSERT INTO `USER` (`USER_ID`, `USER_FULLNAME`, `USER_EMAIL`, `USER_PHONE`, `USER_PASSWORD`, `USER_AVATAR`, `USER_BORNDATE`, `USER_CREATEDATE`, `USER_STATUS`, `USER_IDENTIFICATION`, `USER_NISN`, `INSTITUTION_ID`, `COMPANY_ID`, `TARGET`) VALUES
+(1, 'Grinaldi Wisnu', 'grinaldifoc@gmail.com', '082244949484', '123456', NULL, NULL, '2021-04-03 03:54:07', 10, NULL, '3192313821312', 12, 3, 10);
 
 -- --------------------------------------------------------
 
@@ -205,6 +228,13 @@ CREATE TABLE `USER_PRODUCT` (
   `USER_ID` smallint(6) NOT NULL,
   `PRODUCT_ID` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `USER_PRODUCT`
+--
+
+INSERT INTO `USER_PRODUCT` (`REFF_ID`, `REFF_DATE`, `REFF_STATUS`, `USER_ID`, `PRODUCT_ID`) VALUES
+('E0ZJG', '2021-07-21 11:47:13', 1, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -278,6 +308,8 @@ ALTER TABLE `USER`
 --
 ALTER TABLE `USER_PRODUCT`
   ADD PRIMARY KEY (`REFF_ID`),
+  ADD UNIQUE KEY `PRODUCT_ID` (`PRODUCT_ID`),
+  ADD UNIQUE KEY `USER_ID` (`USER_ID`),
   ADD KEY `fkIdx_51` (`USER_ID`),
   ADD KEY `fkIdx_54` (`PRODUCT_ID`);
 
@@ -307,19 +339,25 @@ ALTER TABLE `INSTITUTION`
 -- AUTO_INCREMENT for table `PRODUCT`
 --
 ALTER TABLE `PRODUCT`
-  MODIFY `PRODUCT_ID` smallint(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `PRODUCT_ID` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `PRODUCT_CATEGORY`
 --
 ALTER TABLE `PRODUCT_CATEGORY`
-  MODIFY `CATEGORY_ID` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `CATEGORY_ID` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `PRODUCT_IMAGE`
 --
 ALTER TABLE `PRODUCT_IMAGE`
-  MODIFY `PRODUCT_IMAGE_ID` smallint(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `PRODUCT_IMAGE_ID` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `TRANSACTION`
+--
+ALTER TABLE `TRANSACTION`
+  MODIFY `TRANSACTION_ID` int(45) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `USER`
