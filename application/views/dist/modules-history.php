@@ -48,8 +48,22 @@ $this->load->view('dist/_partials/header');
                             <td><?= $key->TRANSACTION_DATE; ?></td>
                             <td><?= $key->PAYMENT_TOTAL; ?></td>
                             <td><?= $key->PAYMENT_METHOD; ?></td>
-                            <td><div class="badge badge-success"><td><?= $key->TRANSACTION_STATUS; ?></td></div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                            <td>
+                              <div class="badge badge-info">
+                                <?php 
+                                  if ($key->TRANSACTION_STATUS == 1) {
+                                    echo 'Menunggu Pembayaran';
+                                  } else if ($key->TRANSACTION_STATUS == 2) {
+                                    echo 'Transaksi Diproses';
+                                  } else if ($key->TRANSACTION_STATUS == 3) {
+                                    echo 'Barang Dikirim';
+                                  } else {
+                                    echo 'Transaksi Berhasil';
+                                  }
+                                ?>
+                              </div>
+                            </td>
+                            <td><a href="<?= base_url(); ?>transaction/detail/<?= $key->TRANSACTION_ID; ?>" class="btn btn-info btn-sm">Detail</a></td>
                           </tr>
                           <?php $no++; endforeach; ?>
                         </tbody>

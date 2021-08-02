@@ -60,9 +60,14 @@ $route['api/auth/register'] = 'API/registerAPI';
 // WEB ROUTES
 $route['master/institution/detail/:num'] = 'Master/detail_institution';
 $route['master/company/detail/:num'] = 'Master/detail_company';
+$route['master/buy'] = 'Master/buy';
 $route['product'] = 'Home/product';
 $route['product/add'] = 'Home/product_add';
 $route['history'] = 'Transaction/history';
+$route['transaction/detail/:num'] = 'Transaction/detail';
+
+// API TRANSACTIONS
+$route['api/transaction/create'] = 'Transaction/create';
 
 // API USER
 $route['api/product/add/myproduct'] = 'Home/add_product';

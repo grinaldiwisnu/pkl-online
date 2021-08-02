@@ -27,16 +27,28 @@ class Transaction extends CI_Controller {
     {
         $user = $this->input->post('uid');
         $qty = $this->input->post('qty');
-        $note = $this->input->post('note');
         $addr = $this->input->post('address');
-        $reference = $this->input->post('reff');
         $source = $this->input->post('reference');
+        $reference = $this->input->post('reff');
 
-        if (empty($user) || empty($qty) || empty($addr) || $reference) {
-            $this->msg = array('status' => false, 'message' => 'Data transaksi ada yang masih kosong', 'data' => null);
+        $note = $this->input->post('note');
+
+        if (empty($user) || empty($qty) || empty($addr) || empty($source) || empty($reference)) {
+            $this->msg = array('status' => false, 'message' => 'Data transaksi ada yang masih kosong', 'data' => $this->input->post());
         } else {
 
-            $product = $this->db->where('REFF_ID', $reference)->get('USER_PRODUCT')->row();
+            $productReff = $this->db->where('REFF_ID', $reference)->get('USER_PRODUCT')->row();
+            $product = $this->db->where('PRODUCT_ID', $productReff->PRODUCT_ID)->get('PRODUCT')->row();
+            
+            $payment = array(
+                'PAYMENT_NAME' => "PAID-".strtoupper(uniqid()),
+                'PAYMENT_TOTAL' => $product->PRODUCT_PRICE * $qty,
+                'PAYMENT_METHOD' => 'BCA',
+                'PAYMENT_PROOF' => '',
+            );
+
+            $paymentSave = $this->Transaction->insertPayment($payment);
+
             $data = array(
                 'TRANSACTION_DATE' => date('Y-m-d H:i:s'),
                 'TRANSACTION_CODE' => "TRANSID-".strtoupper(uniqid()),
@@ -47,7 +59,8 @@ class Transaction extends CI_Controller {
                 'TRANSACTION_REFERENCE' => $source,
                 'REFF_ID' => $reference,
                 'USER_ID' => $user,
-                'PRODUCT_ID' => $product->PRODUCT_ID,
+                'PRODUCT_ID' => $productReff->PRODUCT_ID,
+                'PAYMENT_ID' => $paymentSave
             );
 
             if (!$this->Transaction->checkInPaymentTrans()) {
@@ -72,6 +85,18 @@ class Transaction extends CI_Controller {
             'transactions' => $this->Transaction->getTransacions()
         );
         $this->load->view('dist/modules-history', $data);
+    }
+
+    public function detail()
+    {
+        $id = $this->uri->segment(3);
+        $transaction = $this->Transaction->getTransacion($id);
+    
+        $data = array(
+            'title' => $transaction->TRANSACTION_CODE,
+            'transaction' => $transaction
+        );
+        $this->load->view('dist/modules-invoices', $data);
     }
 }
 

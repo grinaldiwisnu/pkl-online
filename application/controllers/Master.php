@@ -34,6 +34,17 @@ class Master extends CI_Controller {
         $this->load->view('dist/modules-history-admin', $data);
     }
 
+    public function buy()
+    {
+
+        $sellingRow = $this->API->getBuyAdmin();
+        $data = array(
+            'title' => "Pembelian Admin",
+            'selling' => $sellingRow,
+        );
+        $this->load->view('dist/modules-history-admin', $data);
+    }
+
     public function institution()
     {
         $institution = $this->API->getInstitution();

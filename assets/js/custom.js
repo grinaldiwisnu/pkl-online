@@ -7,10 +7,10 @@
 
 "use strict";
 
-// let _baseUrl = 'https://pklonline.net/api/'
-// let _baseUrlOrigin = 'https://pklonline.net/'
-let _baseUrl = 'http://localhost/pkl-online/api/'
-let _baseUrlOrigin = 'http://localhost/pkl-online/'
+let _baseUrl = 'https://pklonline.net/api/'
+let _baseUrlOrigin = 'https://pklonline.net/'
+// let _baseUrl = 'http://localhost/pkl-online/api/'
+// let _baseUrlOrigin = 'http://localhost/pkl-online/'
 
 $(document).ready(() => {
 
