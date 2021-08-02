@@ -79,7 +79,7 @@ $this->load->view('dist/_partials/header');
                         <hr class="mt-2 mb-2">
                         <div class="invoice-detail-item">
                           <div class="invoice-detail-name">Total</div>
-                          <div class="invoice-detail-value invoice-detail-value-lg">$685.99</div>
+                          <div class="invoice-detail-value invoice-detail-value-lg">Rp<?= $transaction->PAYMENT_TOTAL; ?></div>
                         </div>
                       </div>
                     </div>
