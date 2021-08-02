@@ -17,7 +17,7 @@ $("#create-transaction").on("submit", (e) => {
                     $("#transaction-success").show()
                     $('#submit').removeClass('btn-progress')
                     setTimeout(() => {
-                        window.location.href = response.data.callback
+                        window.location.href = response.data.CALLBACK
                     }, 1500);
                 } else {
                     $("#transaction-failed").html(response.message)

@@ -36,7 +36,7 @@ $this->load->view('dist/_partials/header');
                       <div class="offset-md-3 col-md-3 col-6 text-md-right">
                         <address>
                           <strong>Dikirim Kepada:</strong><br>
-                          Muhamad Nauval Azhar<br>
+                          <?= $transaction->TRANSACTION_NAME; ?><br>
                           <?= $transaction->TRANSACTION_ADDRESS; ?>
                         </address>
                       </div>

@@ -30,10 +30,11 @@ class Transaction extends CI_Controller {
         $addr = $this->input->post('address');
         $source = $this->input->post('reference');
         $reference = $this->input->post('reff');
+        $name = $this->input->post('name');
 
         $note = $this->input->post('note');
 
-        if (empty($user) || empty($qty) || empty($addr) || empty($source) || empty($reference)) {
+        if (empty($name) || empty($user) || empty($qty) || empty($addr) || empty($source) || empty($reference)) {
             $this->msg = array('status' => false, 'message' => 'Data transaksi ada yang masih kosong', 'data' => $this->input->post());
         } else {
 
@@ -52,6 +53,7 @@ class Transaction extends CI_Controller {
             $data = array(
                 'TRANSACTION_DATE' => date('Y-m-d H:i:s'),
                 'TRANSACTION_CODE' => "TRANSID-".strtoupper(uniqid()),
+                'TRANSACTION_NAME' => $name,
                 'TRANSACTION_STATUS' => 1,
                 'TRANSACTION_ADDRESS' => $addr,
                 'TRANSACTION_NOTE' => $note,
@@ -70,6 +72,7 @@ class Transaction extends CI_Controller {
                 if (!$store) {
                     $this->msg = array('status' => false, 'message' => 'Internal server error', 'data' => null);
                 } else {
+                    $data['CALLBACK'] = base_url().'transaction/detail/'.$store;
                     $this->msg = array('status' => true, 'message' => 'Transaksi berhasil dibuat, silahkan lakukan pembayaran.', 'data' => $data);
                 }
             }

@@ -28,6 +28,12 @@ $this->load->view('dist/_partials/header');
                       <div id="transaction-failed" class="alert alert-danger" style="display:none"></div>
                       <input type="hidden" class="form-control" name="uid" value="<?= $this->session->userdata('id'); ?>">
                       <div class="form-group row mb-4">
+                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Referensi</label>
+                        <div class="col-sm-12 col-md-7">
+                          <input type="text" name="name" class="form-control" placeholder="Masukkan nama pelanggan">
+                        </div>
+                      </div>
+                      <div class="form-group row mb-4">
                         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Produk<span class="text-danger">*</span></label>
                         <div class="col-sm-12 col-md-7">
                           <select class="form-control select2" name="reff">
