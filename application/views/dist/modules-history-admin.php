@@ -28,7 +28,6 @@ $this->load->view('dist/_partials/header');
                             <th class="text-center">
                               #
                             </th>
-                            <th>Nama Produk</th>
                             <th>Nama Mahasiswa</th>
                             <th>Tanggal Pembelian</th>
                             <th>Total Pembelian</th>
@@ -43,9 +42,8 @@ $this->load->view('dist/_partials/header');
                             <td>
                               <?= $no; ?>
                             </td>
-                            <td><?= $key->PRODUCT_NAME; ?></td>
                             <td><?= $key->USER_FULLNAME; ?></td>
-                            <td><?= $key->TRANSACTION_DATE; ?></td>
+                            <td><?= date("d F Y h:i:s", strtotime($key->TRANSACTION_DATE)); ?></td>
                             <td><?= $key->PAYMENT_TOTAL; ?></td>
                             <td><?= $key->PAYMENT_METHOD; ?></td>
                             <td>
@@ -54,16 +52,35 @@ $this->load->view('dist/_partials/header');
                                     if ($key->TRANSACTION_STATUS == 1) {
                                       echo 'Menunggu Pembayaran';
                                     } else if ($key->TRANSACTION_STATUS == 2) {
-                                      echo 'Transaksi Diproses';
+                                      echo 'Menunggu Konfirmasi';
                                     } else if ($key->TRANSACTION_STATUS == 3) {
+                                      echo 'Menunggu Barang Diproses';
+                                    } else if ($key->TRANSACTION_STATUS == 4) {
                                       echo 'Barang Dikirim';
-                                    } else {
+                                    } else if ($key->TRANSACTION_STATUS == 5) {
                                       echo 'Transaksi Berhasil';
+                                    } else {
+                                      echo 'Transaksi Gagal';
                                     }
                                   ?>
                               </div>
                             </td>
-                            <td><a href="<?= base_url(); ?>transaction/detail/<?= $key->TRANSACTION_ID; ?>" class="btn btn-info btn-sm">Detail</a></td>
+                            <td>
+                              <a href="<?= base_url(); ?>transaction/detail/<?= $key->TRANSACTION_ID; ?>" class="btn btn-info btn-sm"><i class="fas fa-receipt"></i></a>
+                              <a href="<?= base_url(); ?>upload/proof/<?= $key->PAYMENT_PROOF; ?>" target="_new" class="btn btn-info btn-sm"><i class="fas fa-image"></i></a>
+                              <?php if ($key->TRANSACTION_STATUS < 5): ?>
+                                <div class="dropdown d-inline mr-2">
+                                  <button class="btn btn-warning btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Update Status
+                                  </button>
+                                  <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="updateStatus(<?= $key->TRANSACTION_ID; ?>, 3)">Konfirmasi Pembayaran</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="updateStatus(<?= $key->TRANSACTION_ID; ?>, 4)">Kirim Barang</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="updateStatus(<?= $key->TRANSACTION_ID; ?>, 5)">Selesai</a>
+                                  </div>
+                                </div>
+                              <?php endif; ?>
+                            </td>
                           </tr>
                           <?php $no++; endforeach; ?>
                         </tbody>

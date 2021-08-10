@@ -101,6 +101,82 @@ class Transaction extends CI_Controller {
         );
         $this->load->view('dist/modules-invoices', $data);
     }
+
+    public function confirm_payment()
+    {
+        $id = $this->input->post('id');
+        $trxId = $this->input->post('trans_id');
+        $paymentName = $this->input->post('name');
+        $paymentNorek = $this->input->post('norek');
+
+        if (empty($id) || empty($trxId) || empty($paymentName) || empty($paymentNorek)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field empty', 'data' => null)
+            );
+        } else {
+            $config['upload_path']="./upload/proof"; //path folder file upload
+            $config['allowed_types']='gif|jpg|png'; //type file yang boleh di upload
+            $config['encrypt_name'] = TRUE; //enkripsi file name upload
+            
+            $this->load->library('upload',$config); //call library upload 
+            if($this->upload->do_upload("proof")){ //upload file
+                $data = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+    
+                $image= $data['upload_data']['file_name']; //set file name ke variable image
+
+                $data = array(
+                    'PAYMENT_AS_NAME' => $paymentName,
+                    'PAYMENT_NO_REK' => $paymentNorek,
+                    'PAYMENT_PROOF' => $image,
+                );
+
+                $result = $this->API->update(array('PAYMENT_ID' => $id), $data, 'PAYMENT');
+                if (!$result) {
+                    echo json_encode(
+                        array('status' => false, 'message' => 'Failed to store on server', 'data' => null)
+                    );
+                } else {
+                    $result = $this->API->update(array('TRANSACTION_ID' => $trxId), array('TRANSACTION_STATUS' => 2), 'TRANSACTION');
+                    if ($result) {
+                        echo json_encode(
+                            array('status' => true, 'message' => 'Update payment success', 'data' => $data)
+                        );
+                    }
+                }
+            } else {
+                echo json_encode(
+                    array('status' => false, 'message' => 'Failed to upload image for payment', 'data' => null)
+                );
+            }
+        }
+    }
+
+    public function update_status()
+    {
+        $status = $this->input->post('status');
+        $trxId = $this->input->post('trans_id');
+
+        if (empty($status) || empty($trxId)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field empty', 'data' => null)
+            );
+        } else {
+            $payload = array(
+                'TRANSACTION_STATUS' => $status
+            );
+
+            $result = $this->API->update(array('TRANSACTION_ID' => $trxId), $payload, 'TRANSACTION');
+            if (!$result) {
+                echo json_encode(
+                    array('status' => false, 'message' => 'Failed to store on server', 'data' => null)
+                );
+            } else {
+                echo json_encode(
+                    array('status' => true, 'message' => 'Success update status', 'data' => null)
+                );
+            }
+        }
+    }
 }
 
 /* End of file Transaction.php */

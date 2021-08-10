@@ -20,7 +20,21 @@ $this->load->view('dist/_partials/header');
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="invoice-title">
-                      <h2>Invoice</h2>
+                      <h3><div class="badge badge-info"><?php 
+                                  if ($transaction->TRANSACTION_STATUS == 1) {
+                                    echo 'Menunggu Pembayaran';
+                                  } else if ($transaction->TRANSACTION_STATUS == 2) {
+                                    echo 'Menunggu Konfirmasi';
+                                  } else if ($transaction->TRANSACTION_STATUS == 3) {
+                                    echo 'Menunggu Barang Diproses';
+                                  } else if ($transaction->TRANSACTION_STATUS == 4) {
+                                    echo 'Barang Dikirim';
+                                  } else if ($transaction->TRANSACTION_STATUS == 5) {
+                                    echo 'Transaksi Berhasil';
+                                  } else {
+                                    echo 'Transaksi Gagal';
+                                  }
+                                ?></div></h3>
                       <div class="invoice-number"><?= $transaction->TRANSACTION_CODE; ?></div>
                     </div>
                     <hr>
@@ -30,7 +44,7 @@ $this->load->view('dist/_partials/header');
                           <strong>Billed To:</strong><br>
                             <?= $transaction->USER_FULLNAME; ?><br><br>
                             <strong>Tanggal Transaksi:</strong><br>
-                          <?= $transaction->TRANSACTION_DATE; ?><br><br>
+                          <?= date("d F Y h:i:s", strtotime($transaction->TRANSACTION_DATE)); ?><br><br>
                         </address>
                       </div>
                       <div class="offset-md-3 col-md-3 col-6 text-md-right">
@@ -60,9 +74,9 @@ $this->load->view('dist/_partials/header');
                         <tr>
                           <td>1</td>
                           <td><?= $transaction->PRODUCT_NAME; ?></td>
-                          <td class="text-center"><?= $transaction->PRODUCT_PRICE; ?></td>
+                          <td class="text-center"><?= number_format($transaction->PRODUCT_PRICE); ?></td>
                           <td class="text-center"><?= $transaction->TRANSACTION_QTY; ?></td>
-                          <td class="text-right"><?= $transaction->PAYMENT_TOTAL; ?></td>
+                          <td class="text-right"><?= number_format($transaction->PAYMENT_TOTAL); ?></td>
                         </tr>
                       </table>
                     </div>
@@ -71,15 +85,15 @@ $this->load->view('dist/_partials/header');
                         <div class="section-title">Payment Method</div>
                         <div class="alert alert-info">
                             Anda dapat melakukan pembayaran melalui rekening berikut:<br>
-                            <h6>BCA 0182399123 a.n Grinaldi Wisnu Tri Prasetyo</h6>
-                            Sejumlah <b>Rp<?= $transaction->PAYMENT_TOTAL; ?></b>
+                            <h6>BRI 0585-01-000755-30-4 a.n LIBMI Education Center </h6>
+                            Sejumlah <b>Rp<?= number_format($transaction->PAYMENT_TOTAL); ?></b>
                         </div>
                       </div>
                       <div class="col-lg-4 text-right">
                         <hr class="mt-2 mb-2">
                         <div class="invoice-detail-item">
                           <div class="invoice-detail-name">Total</div>
-                          <div class="invoice-detail-value invoice-detail-value-lg">Rp<?= $transaction->PAYMENT_TOTAL; ?></div>
+                          <div class="invoice-detail-value invoice-detail-value-lg">Rp<?= number_format($transaction->PAYMENT_TOTAL); ?></div>
                         </div>
                       </div>
                     </div>
@@ -89,8 +103,11 @@ $this->load->view('dist/_partials/header');
               <hr>
               <div class="text-md-right">
                 <div class="float-lg-left mb-lg-0 mb-3">
-                  <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
-                  <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
+                  <?php if(!$this->session->userdata('admin') && $transaction->TRANSACTION_STATUS == 1): ?>
+                    <button class="btn btn-primary btn-icon icon-left" data-toggle="modal" data-target="#confirmModal"><i class="fas fa-credit-card"></i> Process Payment</button>
+                  <?php elseif($this->session->userdata('admin') && $transaction->TRANSACTION_STATUS > 1): ?>
+                    <a class="btn btn-primary btn-icon icon-left" href="<?= base_url(); ?>upload/proof/<?= $transaction->PAYMENT_PROOF; ?>" target="_new"><i class="fas fa-credit-card"></i> Payment Detail</a>
+                  <?php endif; ?>
                 </div>
                 <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
               </div>
@@ -98,4 +115,39 @@ $this->load->view('dist/_partials/header');
           </div>
         </section>
       </div>
+
+      <div class="modal fade" tabindex="-1" role="dialog" id="confirmModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Konfirmasi Pembayaran</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form id="payment-method" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label>Nama Pengirim</label>
+                    <input type="hidden" name="id" id="id" value="<?= $transaction->PAYMENT_ID; ?>">
+                    <input type="hidden" name="trans_id" id="trans_id" value="<?= $transaction->TRANSACTION_ID; ?>">
+                    <input type="text" class="form-control" name="name" id="name">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor Rekening Pengirim</label>
+                    <input type="text" class="form-control" name="norek" id="norek">
+                  </div>
+                  <div class="form-group">
+                    <label>Bukti Pembayaran</label>
+                    <input type="file" class="form-control" name="proof" id="proof">
+                  </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                  <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
 <?php $this->load->view('dist/_partials/footer'); ?>

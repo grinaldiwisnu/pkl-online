@@ -68,6 +68,8 @@ $route['transaction/detail/:num'] = 'Transaction/detail';
 
 // API TRANSACTIONS
 $route['api/transaction/create'] = 'Transaction/create';
+$route['api/transaction/payment'] = 'Transaction/confirm_payment';
+$route['api/transaction/status'] = 'Transaction/update_status';
 
 // API USER
 $route['api/product/add/myproduct'] = 'Home/add_product';
