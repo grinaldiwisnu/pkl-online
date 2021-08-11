@@ -23,6 +23,16 @@ class Master extends CI_Controller {
         
     }
 
+    public function job()
+    {
+        $jobs = $this->API->get('JOB');
+        $data = array(
+            'title' => "Master Job Vacation",
+            'jobs' => $jobs,
+        );
+        $this->load->view('dist/modules-job-admin', $data);
+    }
+
     public function history()
     {
 
@@ -602,6 +612,145 @@ class Master extends CI_Controller {
                     array('status' => false, 'message' => 'Failed to update data with id ' + $id, 'data' => null)
                 ); 
             }
+        }
+    }
+
+    public function add_job()
+    {
+        $jobPosition = $this->input->post('position');
+        $jobCompany = $this->input->post('company');
+        $jobStart = $this->input->post('start');
+        $jobEnd = $this->input->post('end');
+        $jobDescription = $this->input->post('description');
+
+        if (empty($jobPosition) || empty($jobCompany) || empty($jobStart) || empty($jobEnd) || empty($jobDescription)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field are empty', 'data' => null)
+            );
+        } else {
+            $config['upload_path']="./upload/jobs"; //path folder file upload
+            $config['allowed_types']='gif|jpg|png'; //type file yang boleh di upload
+            $config['encrypt_name'] = TRUE; //enkripsi file name upload
+
+            $this->load->library('upload',$config); //call library upload 
+            if($this->upload->do_upload("poster")){ //upload file
+                $data = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+    
+                $image= $data['upload_data']['file_name']; //set file name ke variable image
+
+                $data = array(
+                    'JOB_POSITION' => $jobPosition,
+                    'JOB_COMPANY' => $jobCompany,
+                    'JOB_START' => $jobStart,
+                    'JOB_END' => $jobEnd,
+                    'JOB_DESCRIPTION' => $jobDescription,
+                    'JOB_POSTER' => $image,
+                );
+
+                $result = $this->API->insert($data, 'JOB');
+                if (!$result) {
+                    echo json_encode(
+                        array('status' => false, 'message' => 'Failed to store on server', 'data' => null)
+                    );
+                } else {
+                    echo json_encode(
+                       array('status' => true, 'message' => 'Add job success', 'data' => $data)
+                    );
+                }
+            } else {
+                echo json_encode(
+                    array('status' => false, 'message' => 'Failed to upload image for job', 'data' => null)
+                );
+            }
+        }
+    }
+
+    public function get_job()
+    {
+        $id = $this->uri->segment(5);
+        
+        if (empty($id)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field id empty', 'data' => null)
+            );
+        } else {
+            $result = $this->API->getById(array('JOB_ID' => $id), 'JOB');
+            if (!$result) {
+                echo json_encode(
+                    array('status' => false, 'message' => "Data not found $id", 'data' => null)
+                );
+            } else {
+                echo json_encode(
+                    array('status' => true, 'message' => 'Get data job by id success', 'data' => $result)
+                );
+            }
+        }
+    }
+
+    public function update_job()
+    {
+        $id = $this->input->post('id');
+        $jobPosition = $this->input->post('position');
+        $jobCompany = $this->input->post('company');
+        $jobStart = $this->input->post('start');
+        $jobEnd = $this->input->post('end');
+        $jobDescription = $this->input->post('description');
+
+        if (empty($id) || empty($jobPosition) || empty($jobCompany) || empty($jobStart) || empty($jobEnd) || empty($jobDescription)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field are empty', 'data' => null)
+            );
+        } else {
+            $config['upload_path']="./upload/jobs"; //path folder file upload
+            $config['allowed_types']='gif|jpg|png'; //type file yang boleh di upload
+            $config['encrypt_name'] = TRUE; //enkripsi file name upload
+
+            $this->load->library('upload',$config); //call library upload 
+            if($this->upload->do_upload("poster")){ //upload file
+                $data = array('upload_data' => $this->upload->data()); //ambil file name yang diupload
+    
+                $image= $data['upload_data']['file_name']; //set file name ke variable image
+
+                $param = array('JOB_ID' => $id);
+                $data = array(
+                    'JOB_POSITION' => $jobPosition,
+                    'JOB_COMPANY' => $jobCompany,
+                    'JOB_START' => $jobStart,
+                    'JOB_END' => $jobEnd,
+                    'JOB_DESCRIPTION' => $jobDescription,
+                    'JOB_POSTER' => $image,
+                );
+
+                $result = $this->API->update($param, $data, 'JOB');
+                if ($result) {
+                    echo json_encode(
+                        array('status' => true, 'message' => 'Update job success', 'data' => $data)
+                    );
+                } else {
+                    echo json_encode(
+                        array('status' => false, 'message' => 'Failed to update data with id ' + $id, 'data' => null)
+                    ); 
+                }
+            } else {
+                echo json_encode(
+                    array('status' => false, 'message' => 'Failed to upload image for product', 'data' => null)
+                );
+            }
+        }
+    }
+
+    public function delete_job()
+    {
+        $id = $this->uri->segment(5);
+        if (empty($id)) {
+            echo json_encode(
+                array('status' => false, 'message' => 'Field id empty', 'data' => null)
+            );
+        } else {
+            $result = $this->API->delete(array('JOB_ID' => $id), 'JOB');
+            echo json_encode(
+                array('status' => true, 'message' => 'Delete data job by id success', 'data' => $result)
+            );
         }
     }
 }

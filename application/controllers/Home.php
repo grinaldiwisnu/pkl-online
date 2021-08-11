@@ -20,13 +20,14 @@ class Home extends CI_Controller {
             $totalCompany = $this->API->getCompanyRow();
             $totalProduct = $this->API->getProductRow();
             $totalSelling = $this->API->getSellingRow();
+            
 
             $data = array(
                 'title' => "Admin Dashboard",
                 'total_user' => $totalUser,
                 'total_company' => $totalCompany,
                 'total_product' => $totalProduct,
-                'total_selling' => $totalSelling
+                'total_selling' => $totalSelling,
             );
             $this->load->view('dist/index-admin', $data);
         } else {
@@ -40,12 +41,14 @@ class Home extends CI_Controller {
                     $products[$i]->IMAGE = $this->API->getFirstChildById(array('PRODUCT_ID' => $products[$i]->PRODUCT_ID), 'PRODUCT_IMAGE');
                 }
             }
+            $jobs = $this->API->getJobsHome();
             $data = array(
                 'title' => "Dashboard",
                 'total_product' => $totalProduct,
                 'total_selling' => $totalSelling,
                 'products' => $products,
-                'user' => $user
+                'user' => $user,
+                'jobs' => $jobs
             );
             $this->load->view('dist/index', $data);
         }

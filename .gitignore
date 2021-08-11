@@ -16,5 +16,8 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 
-/upload/proof/
-/upload/products/
+/upload/proof/*
+/upload/products/*
+
+/application/config/config.php
+/application/config/dtabase.php

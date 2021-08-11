@@ -82,6 +82,15 @@ class API extends CI_Controller {
 
 		echo json_encode($this->msg);
 	}
+
+	public function getJobsAPI()
+	{
+		$result = $this->API->get('JOB');
+
+		$this->msg = array('status' => true, 'message' => 'get Jobs success', 'data' => $result);
+
+		echo json_encode($this->msg);
+	}
 }
 
 /* End of file API.php */

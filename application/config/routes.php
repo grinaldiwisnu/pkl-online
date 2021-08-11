@@ -104,3 +104,10 @@ $route['api/master/delete/user/:num'] = 'Master/delete_user_institution';
 $route['api/master/add/category'] = 'Master/add_category';
 $route['api/master/get/category/:num'] = 'Master/get_category';
 $route['api/master/update/category'] = 'Master/update_category';
+
+// Job Master Endpoint
+$route['api/jobs'] = 'API/getJobsAPI';
+$route['api/master/add/job'] = 'Master/add_job';
+$route['api/master/get/job/:num'] = 'Master/get_job';
+$route['api/master/update/job'] = 'Master/update_job';
+$route['api/master/delete/job/:num'] = 'Master/delete_job';

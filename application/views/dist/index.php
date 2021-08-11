@@ -99,49 +99,17 @@ $this->load->view('dist/_partials/header');
                 </div>
                 <div class="card-body p-0">
                   <div class="tickets-list">
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Backend Engineer</h4>
-                      </div>
-                      <div class="ticket-info">
-                        <div>PT Majoo Teknologi Indonesia</div>
-                      </div>
-                    </a>
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Backend Engineer</h4>
-                      </div>
-                      <div class="ticket-info">
-                        <div>PT Majoo Teknologi Indonesia</div>
-                      </div>
-                    </a>
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Backend Engineer</h4>
-                      </div>
-                      <div class="ticket-info">
-                        <div>PT Majoo Teknologi Indonesia</div>
-                      </div>
-                    </a>
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Backend Engineer</h4>
-                      </div>
-                      <div class="ticket-info">
-                        <div>PT Majoo Teknologi Indonesia</div>
-                      </div>
-                    </a>
-                    <a href="#" class="ticket-item">
-                      <div class="ticket-title">
-                        <h4>Backend Engineer</h4>
-                      </div>
-                      <div class="ticket-info">
-                        <div>PT Majoo Teknologi Indonesia</div>
-                      </div>
-                    </a>
-                    <a href="<?php echo base_url(); ?>dist/features_tickets" class="ticket-item ticket-more">
-                      Lihat Semua <i class="fas fa-chevron-right"></i>
-                    </a>
+                    <?php foreach($jobs as $job): ?>
+                      <a class="ticket-item">
+                        <div class="ticket-title">
+                          <h4><?= $job->JOB_POSITION; ?></h4>
+                        </div>
+                        <div><?= $job->JOB_COMPANY; ?></div>
+                        <div class="ticket-info">
+                          <div class="text-primary text-small"><?= date('d F Y', strtotime($job->JOB_START)); ?> - <?= date('d F Y', strtotime($job->JOB_END)); ?></div>
+                        </div>
+                      </a>
+                    <?php endforeach; ?>
                   </div>
                 </div>
               </div>

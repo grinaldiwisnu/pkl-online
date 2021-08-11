@@ -176,6 +176,7 @@ $("#add-product").submit(function(e) {
         contentType:false,
         cache:false,
         async:false,
+        dataType:'json',
         success: function (response) {
             if (response.status) {
                 window.location.reload()
@@ -199,6 +200,7 @@ $("#update-product").submit(function(e) {
         contentType:false,
         cache:false,
         async:false,
+        dataType:'json',
         success: function (response) {
             if (response.status) {
                 window.location.reload()
@@ -320,6 +322,99 @@ function deleteCategory(id) {
             type: "GET",
             dataType: "JSON",
             url: _baseUrl + "/master/delete/category/" + id,
+            success: function (response) {
+                if (response.status) {
+                    window.location.reload()
+                } else {
+                    alert(response.message)
+                }
+            }
+        });
+    }
+}
+
+$("#add-job").submit(function(e) {
+    e.preventDefault()
+
+    var formData = new FormData(this)
+    $.ajax({
+        type: "POST",
+        url: _baseUrl + "/master/add/job",
+        data: formData,
+        processData:false,
+        contentType:false,
+        cache:false,
+        async:false,
+        dataType:'json',
+        success: function (response) {
+            if (response.status) {
+                window.location.reload()
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+})
+
+$("#update-job").submit(function(e) {
+    e.preventDefault()
+
+    var formData = new FormData(this)
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: _baseUrl + "/master/update/job",
+        data: formData,
+        processData:false,
+        contentType:false,
+        cache:false,
+        async:false,
+        dataType:'json',
+        success: function (response) {
+            if (response.status) {
+                window.location.reload()
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+})
+
+function editJob(id) {
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: _baseUrl + "/master/get/job/" + id,
+        success: function (response) {
+            if (response.status) {
+                let img = _baseUrlOrigin + "assets/img/news/img09.jpg"
+                if (response.data.JOB_POSITION != null) {
+                    img = _baseUrlOrigin + "upload/jobs/" + response.data.JOB_POSTER
+                }
+                $('#id').val(response.data.JOB_ID)
+                $('#position').val(response.data.JOB_POSITION)
+                $('#company').val(response.data.JOB_COMPANY)
+                $('#start').val(response.data.JOB_START)
+                $('#end').val(response.data.JOB_END)
+                $('#description').val(response.data.JOB_DESCRIPTION)
+                $('.gallery-item').attr("data-image", img)
+                $('.gallery-item').attr("style", "height: 350px; background-image: url('"+ img +"');")
+
+                $('#editModal').modal('show')
+            } else {
+                alert(response.message)
+            }
+        }
+    });
+}
+
+function deleteJob(id) {
+    
+    if (confirm('Ingin mengapus pekerjaan?')) {
+        $.ajax({
+            type: "GET",
+            dataType: "JSON",
+            url: _baseUrl + "/master/delete/job/" + id,
             success: function (response) {
                 if (response.status) {
                     window.location.reload()

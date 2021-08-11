@@ -205,6 +205,12 @@ class API_Model extends CI_Model {
 		$query = $this->db->query("SELECT * FROM PRODUCT WHERE COMPANY_ID = $companyId AND PRODUCT_ID NOT IN (SELECT PRODUCT_ID FROM USER_PRODUCT WHERE USER_ID = $id)");
 		return $query->result();
 	}
+
+	public function getJobsHome()
+	{
+		$query = $this->db->order_by('JOB_ID', 'DESC')->limit(5)->get('JOB');
+		return $query->result();
+	}
 }
 
 /* End of file API_Model.php */
