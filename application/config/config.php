@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 // $config['base_url'] = 'http://localhost/pkl-online/';
-$config['base_url'] = 'https://pklonline.net/';
+$config['base_url'] = 'https://pklonline.net/dashboard/';
 
 /*
 |--------------------------------------------------------------------------

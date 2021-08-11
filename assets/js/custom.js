@@ -7,8 +7,8 @@
 
 "use strict";
 
-let _baseUrl = 'https://pklonline.net/api/'
-let _baseUrlOrigin = 'https://pklonline.net/'
+let _baseUrl = 'https://pklonline.net/dashboard/api/'
+let _baseUrlOrigin = 'https://pklonline.net/dashboard/'
 // let _baseUrl = 'http://localhost/pkl-online/api/'
 // let _baseUrlOrigin = 'http://localhost/pkl-online/'
 
