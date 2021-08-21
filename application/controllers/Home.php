@@ -16,11 +16,17 @@ class Home extends CI_Controller {
     {
         $isAdmin = $this->session->userdata('admin');
         if ($isAdmin) {
-            $totalUser = $this->API->getUserRow();
-            $totalCompany = $this->API->getCompanyRow();
-            $totalProduct = $this->API->getProductRow();
-            $totalSelling = $this->API->getSellingRow();
-            
+            if ($this->session->userdata('data')->ADMIN_ROLE == 2) {
+                $totalUser = $this->API->getUserRow();
+                $totalCompany = $this->API->getCompanyRow();
+                $totalProduct = $this->API->getProductRow();
+                $totalSelling = $this->API->getSellingRow();
+            } else {
+                $totalUser = $this->API->getUserRow($this->session->userdata('data')->ADMIN_INSTITUTION);
+                $totalCompany = $this->API->getCompanyRow();
+                $totalProduct = $this->API->getProductRow();
+                $totalSelling = $this->API->getSellingRow(null, $this->session->userdata('data')->ADMIN_INSTITUTION);
+            }
 
             $data = array(
                 'title' => "Admin Dashboard",

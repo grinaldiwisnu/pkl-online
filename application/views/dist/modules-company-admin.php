@@ -81,6 +81,14 @@ $this->load->view('dist/_partials/header');
                     <label>Alamat Perusahaan</label>
                     <input type="text" class="form-control" name="address">
                   </div>
+                  <div class="form-group">
+                    <label>Pendamping Perusahaan</label>
+                    <input type="text" class="form-control" name="pendamping">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor Pendamping Perusahaan</label>
+                    <input type="text" class="form-control" name="nohp">
+                  </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -109,6 +117,14 @@ $this->load->view('dist/_partials/header');
                   <div class="form-group">
                     <label>Alamat Perusahaan</label>
                     <input type="text" class="form-control" name="address" id="address">
+                  </div>
+                  <div class="form-group">
+                    <label>Pendamping Perusahaan</label>
+                    <input type="text" class="form-control" name="pendamping" id="pendamping">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor Pendamping Perusahaan</label>
+                    <input type="text" class="form-control" name="nohp" id="nohp">
                   </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

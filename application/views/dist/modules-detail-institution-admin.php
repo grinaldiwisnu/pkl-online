@@ -62,9 +62,9 @@ $this->load->view('dist/_partials/header');
                             <th class="text-center">
                               #
                             </th>
-                            <th>NISN</th>
+                            <th>NIK</th>
                             <th>Nama Lengkap</th>
-                            <th>Email</th>
+                            <th>Status</th>
                             <th>Perusahaan</th>
                             <th>Target Penjualan</th>
                             <th>Action</th>
@@ -78,7 +78,7 @@ $this->load->view('dist/_partials/header');
                             </td>
                             <td><?= $key->USER_NISN; ?></td>
                             <td><?= $key->USER_FULLNAME; ?></td>
-                            <td><?= $key->USER_EMAIL; ?></td>
+                            <td><?= $key->USER_STATUS == 10 ? "Sedang Magang" : "Sudah Magang"; ?></td>
                             <td><?= $key->COMPANY_ID == null ? "Belum didaftarkan" : $key->COMPANY_DETAIL->COMPANY_NAME; ?></td>
                             <td><?= $key->TARGET == null ? "Belum ada target" : $key->TARGET; ?></td>
                             <td>
@@ -134,6 +134,14 @@ $this->load->view('dist/_partials/header');
                   <div class="form-group">
                     <label>Target Penjualan</label>
                     <input type="number" class="form-control" name="target" id="target">
+                  </div>
+                  <div class="form-group">
+                    <label>Status Magang</label>
+                    <select name="status" id="status" class="form-control">
+                        <option value="">Pilih status magang saat ini</option>
+                        <option value="10">Sedang Magang</option>
+                        <option value="20">Selesai Magang</option>
+                    </select>
                   </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

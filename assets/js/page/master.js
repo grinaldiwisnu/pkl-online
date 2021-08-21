@@ -41,6 +41,13 @@ $("#update-institution").on("submit", (e) => {
 })
 
 function editInstitution(id) {
+    $('#id_admin').val('')
+    $('#admin_name').val('')
+    $('#admin_email').val('')
+    $('#admin_nohp').val('')
+    $('#admin_password').val('')
+
+
     $.ajax({
         type: "GET",
         dataType: "JSON",
@@ -50,6 +57,13 @@ function editInstitution(id) {
                 $('#id').val(response.data.INSTITUTION_ID)
                 $('#name').val(response.data.INSTITUTION_NAME)
                 $('#address').val(response.data.INSTITUTION_ADDRESS)
+                if (response.data.ADMIN !== null) {
+                    $('#id_admin').val(response.data.ADMIN.ADMIN_ID)
+                    $('#admin_name').val(response.data.ADMIN.ADMIN_NAME)
+                    $('#admin_email').val(response.data.ADMIN.ADMIN_EMAIL)
+                    $('#admin_nohp').val(response.data.ADMIN.ADMIN_NOHP)
+                    $('#admin_password').val(response.data.ADMIN.ADMIN_PASSWORD)
+                }
 
                 $('#editModal').modal('show')
             } else {
@@ -92,6 +106,7 @@ function editUserInstitution(id) {
                 $('#email').val(response.data.USER_EMAIL)
                 $('#phone').val(response.data.USER_PHONE)
                 $('#target').val(response.data.TARGET)
+                $('#status').val(response.data.USER_STATUS)
                 if (response.data.COMPANY_ID != null)
                     $('#company').val(response.data.COMPANY_ID)
 
@@ -133,6 +148,8 @@ function editCompany(id) {
                 $('#id').val(response.data.COMPANY_ID)
                 $('#name').val(response.data.COMPANY_NAME)
                 $('#address').val(response.data.COMPANY_ADDRESS)
+                $('#pendamping').val(response.data.COMPANY_PARTNER)
+                $('#nohp').val(response.data.COMPANY_NOHP)
 
                 $('#editModal').modal('show')
             } else {

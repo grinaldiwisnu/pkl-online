@@ -61,17 +61,22 @@ class API_Model extends CI_Model {
 		return $query;
 	}
 
-	public function getUserRow()
+	public function getUserRow($id = null)
 	{
-		$query = $this->db->get('USER')->num_rows();
+		if ($id == null)
+			$query = $this->db->get('USER')->num_rows();
+		else
+			$query = $this->db->where(array('INSTITUTION_ID' => $id))->get('USER')->num_rows();
 
 		return $query;
 	}
 
-	public function getSellingRow($id = null)
+	public function getSellingRow($id = null, $iid = null)
 	{
-		if ($id != null) {
+		if ($id == null && $iid == null) {
 			$query = $this->db->get('TRANSACTION')->num_rows();
+		} else if ($id == null && $iid != null) {
+			$query = $this->db->query("SELECT * FROM USER U JOIN TRANSACTION T ON U.USER_ID = T.USER_ID WHERE U.INSTITUTION_ID = $iid")->num_rows();
 		} else {
 			$query = $this->db->where('USER_ID', $id)->get('TRANSACTION')->num_rows();
 		}
@@ -99,9 +104,12 @@ class API_Model extends CI_Model {
 		return $query;
 	}
 
-	public function getSellingAdmin()
+	public function getSellingAdmin($id = null)
 	{
-		$query = $this->db->query('SELECT T.TRANSACTION_ID, T.TRANSACTION_DATE, T.TRANSACTION_CODE, T.TRANSACTION_STATUS, P.PRODUCT_NAME, U.USER_FULLNAME, PP.PAYMENT_TOTAL, PP.PAYMENT_NAME, PP.PAYMENT_METHOD, PP.PAYMENT_PROOF, PP.PAYMENT_AS_NAME, PP.PAYMENT_NO_REK FROM TRANSACTION T JOIN PRODUCT P ON P.PRODUCT_ID = T.PRODUCT_ID JOIN PAYMENT PP ON PP.PAYMENT_ID = T.PAYMENT_ID JOIN USER U ON U.USER_ID = T.USER_ID WHERE T.TRANSACTION_STATUS = 5')->result();
+		if ($id == null)
+			$query = $this->db->query('SELECT T.TRANSACTION_ID, T.TRANSACTION_DATE, T.TRANSACTION_CODE, T.TRANSACTION_STATUS, P.PRODUCT_NAME, U.USER_FULLNAME, PP.PAYMENT_TOTAL, PP.PAYMENT_NAME, PP.PAYMENT_METHOD, PP.PAYMENT_PROOF, PP.PAYMENT_AS_NAME, PP.PAYMENT_NO_REK FROM TRANSACTION T JOIN PRODUCT P ON P.PRODUCT_ID = T.PRODUCT_ID JOIN PAYMENT PP ON PP.PAYMENT_ID = T.PAYMENT_ID JOIN USER U ON U.USER_ID = T.USER_ID WHERE T.TRANSACTION_STATUS = 5')->result();
+		else
+			$query = $this->db->query('SELECT T.TRANSACTION_ID, T.TRANSACTION_DATE, T.TRANSACTION_CODE, T.TRANSACTION_STATUS, P.PRODUCT_NAME, U.USER_FULLNAME, PP.PAYMENT_TOTAL, PP.PAYMENT_NAME, PP.PAYMENT_METHOD, PP.PAYMENT_PROOF, PP.PAYMENT_AS_NAME, PP.PAYMENT_NO_REK FROM TRANSACTION T JOIN PRODUCT P ON P.PRODUCT_ID = T.PRODUCT_ID JOIN PAYMENT PP ON PP.PAYMENT_ID = T.PAYMENT_ID JOIN USER U ON U.USER_ID = T.USER_ID WHERE U.INSTITUTION_ID = '.$id)->result();
 
 		return $query;
 	}
@@ -113,9 +121,12 @@ class API_Model extends CI_Model {
 		return $query;
 	}
 
-	public function getInstitution()
+	public function getInstitution($id = null)
 	{
-		$query = $this->db->get('INSTITUTION')->result();
+		if ($id == null)
+			$query = $this->db->get('INSTITUTION')->result();
+		else
+			$query = $this->db->where('INSTITUTION_ID', $id)->get('INSTITUTION')->result();
 
 		return $query;
 	}

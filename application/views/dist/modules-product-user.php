@@ -33,7 +33,7 @@ $this->load->view('dist/_partials/header');
 
           <div class="section-body">
             <h2 class="section-title">Daftar Produk Saya 
-            <a href="<?= base_url(); ?>product/add" class="btn btn-primary float-right"><i class="fas fa-plus"></i>&nbsp; Pilih Produk Saya</a>
+            <?php if ($isAvailable == true) : ?><a href="<?= base_url(); ?>product/add" class="btn btn-primary float-right"><i class="fas fa-plus"></i>&nbsp; Pilih Produk Saya</a><?php endif; ?>
             </h2>
             
             <div class="row">

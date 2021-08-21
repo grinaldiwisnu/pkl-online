@@ -35,8 +35,12 @@ class Master extends CI_Controller {
 
     public function history()
     {
-
-        $sellingRow = $this->API->getSellingAdmin();
+        if ($this->session->userdata('data')->ADMIN_ROLE == 2) {
+            $sellingRow = $this->API->getSellingAdmin();
+        } else {
+            $sellingRow = $this->API->getSellingAdmin($this->session->userdata('data')->ADMIN_INSTITUTION);
+        }
+        
         $data = array(
             'title' => "History Admin",
             'selling' => $sellingRow,
@@ -57,7 +61,11 @@ class Master extends CI_Controller {
 
     public function institution()
     {
-        $institution = $this->API->getInstitution();
+        if ($this->session->userdata('data')->ADMIN_ROLE == 2) {
+            $institution = $this->API->getInstitution();
+        } else {
+            $institution = $this->API->getInstitution($this->session->userdata('data')->ADMIN_INSTITUTION);
+        }
         $data = array(
             'title' => "Master Institusi",
             'institution' => $institution,
@@ -89,8 +97,12 @@ class Master extends CI_Controller {
     {
         $institution_name = $this->input->post('name');
         $institution_address = $this->input->post('address');
+        $admin_name = $this->input->post('admin_name');
+        $admin_nohp = $this->input->post('admin_nohp');
+        $admin_email = $this->input->post('admin_email');
+        $admin_password = $this->input->post('admin_password');
 
-        if (empty($institution_name) || empty($institution_address)) {
+        if (empty($institution_name) || empty($institution_address) || empty($admin_name) || empty($admin_nohp) || empty($admin_email) || empty($admin_password)) {
             echo json_encode(
                 array('status' => false, 'message' => 'Field empty', 'data' => null)
             );
@@ -103,9 +115,20 @@ class Master extends CI_Controller {
                     array('status' => false, 'message' => 'Failed to store on server', 'data' => null)
                 );
             } else {
-                echo json_encode(
-                    array('status' => true, 'message' => 'Add Institution success', 'data' => $data)
+                $dt = array(
+                    'ADMIN_NAME' => $admin_name, 
+                    'ADMIN_EMAIL' => $admin_email, 
+                    'ADMIN_PASSWORD' => $admin_password,
+                    'ADMIN_NOHP' => $admin_nohp,
+                    'ADMIN_ROLE' => 1,
+                    'ADMIN_INSTITUTION' => $result,
                 );
+
+                if ($this->API->insert($dt, 'ADMIN')) {
+                    echo json_encode(
+                        array('status' => true, 'message' => 'Add Institution success', 'data' => $data)
+                    );
+                }
             }
         }
     }
@@ -125,6 +148,7 @@ class Master extends CI_Controller {
                     array('status' => false, 'message' => "Data not found $id", 'data' => null)
                 );
             } else {
+                $result->ADMIN = $this->API->getById(array('ADMIN_INSTITUTION' => $result->INSTITUTION_ID), 'ADMIN');
                 echo json_encode(
                     array('status' => true, 'message' => 'Get data institution by id success', 'data' => $result)
                 );
@@ -137,8 +161,13 @@ class Master extends CI_Controller {
         $id = $this->input->post('id');
         $institution_name = $this->input->post('name');
         $institution_address = $this->input->post('address');
+        $idadmin = $this->input->post('id_admin');
+        $admin_name = $this->input->post('admin_name');
+        $admin_nohp = $this->input->post('admin_nohp');
+        $admin_email = $this->input->post('admin_email');
+        $admin_password = $this->input->post('admin_password');
 
-        if (empty($id) || empty($institution_name) || empty($institution_address)) {
+        if (empty($id) || empty($institution_name) || empty($institution_address) || empty($admin_name) || empty($admin_nohp) || empty($admin_email) || empty($admin_password)) {
             echo json_encode(
                 array('status' => false, 'message' => 'Field are empty', 'data' => null)
             );
@@ -148,9 +177,33 @@ class Master extends CI_Controller {
 
             $result = $this->API->update($param, $data, 'INSTITUTION');
             if ($result) {
-                echo json_encode(
-                    array('status' => true, 'message' => 'Update institution success', 'data' => $data)
-                );
+                if ($idadmin == null) {
+                    $dt = array(
+                        'ADMIN_NAME' => $admin_name,
+                        'ADMIN_EMAIL' => $admin_email,
+                        'ADMIN_PASSWORD' => $admin_password,
+                        'ADMIN_NOHP' => $admin_nohp,
+                        'ADMIN_ROLE' => 1,
+                        'ADMIN_INSTITUTION' => $id
+                    );
+                    if ($this->API->insert($dt, 'ADMIN')) {
+                        echo json_encode(
+                            array('status' => true, 'message' => 'Update institution success', 'data' => $data)
+                        );
+                    }
+                } else {
+                    $dt = array(
+                        'ADMIN_NAME' => $admin_name,
+                        'ADMIN_EMAIL' => $admin_email,
+                        'ADMIN_PASSWORD' => $admin_password,
+                        'ADMIN_NOHP' => $admin_nohp,
+                    );
+                    if ($this->API->update(array('ADMIN_ID' => $idadmin), $dt, 'ADMIN')) {
+                        echo json_encode(
+                            array('status' => true, 'message' => 'Update institution success', 'data' => $data)
+                        );
+                    }
+                }
             } else {
                 echo json_encode(
                     array('status' => false, 'message' => 'Failed to update data with id ' + $id, 'data' => null)
@@ -229,8 +282,9 @@ class Master extends CI_Controller {
         $user_phone = $this->input->post('phone');
         $company_id = $this->input->post('company');
         $target = $this->input->post('target');
+        $status = $this->input->post('status');
 
-        if (empty($id) || empty($user_fullname) || empty($user_email) || empty($user_phone) || empty($company_id) || empty($target)) {
+        if (empty($id) || empty($user_fullname) || empty($user_email) || empty($user_phone) || empty($company_id) || empty($target) || empty($status)) {
             echo json_encode(
                 array('status' => false, 'message' => 'Field are empty', 'data' => null)
             );
@@ -241,7 +295,8 @@ class Master extends CI_Controller {
                 'USER_EMAIL' => $user_email, 
                 'USER_PHONE' => $user_phone,
                 'COMPANY_ID' => $company_id,
-                'TARGET'     => $target
+                'TARGET'     => $target,
+                'USER_STATUS'=> $status
             );
 
             $result = $this->API->update($param, $data, 'USER');
@@ -323,14 +378,16 @@ class Master extends CI_Controller {
         $id = $this->input->post('id');
         $comapny_name = $this->input->post('name');
         $company_address = $this->input->post('address');
+        $company_partner = $this->input->post('pendamping');
+        $company_nohp = $this->input->post('nohp');
 
-        if (empty($id) || empty($comapny_name) || empty($company_address)) {
+        if (empty($id) || empty($comapny_name) || empty($company_address) || empty($company_partner) || empty($company_nohp)) {
             echo json_encode(
                 array('status' => false, 'message' => 'Field are empty', 'data' => null)
             );
         } else {
             $param = array('COMPANY_ID' => $id);
-            $data = array('COMPANY_NAME' => $comapny_name, 'COMPANY_ADDRESS' => $company_address);
+            $data = array('COMPANY_NAME' => $comapny_name, 'COMPANY_ADDRESS' => $company_address, 'COMPANY_PARTNER' => $company_partner, 'COMPANY_NOHP' => $company_nohp);
 
             $result = $this->API->update($param, $data, 'COMPANY');
             if ($result) {
@@ -364,13 +421,15 @@ class Master extends CI_Controller {
     {
         $comapny_name = $this->input->post('name');
         $company_address = $this->input->post('address');
+        $company_partner = $this->input->post('pendamping');
+        $company_nohp = $this->input->post('nohp');
 
-        if (empty($comapny_name) || empty($company_address)) {
+        if (empty($comapny_name) || empty($company_address) || empty($company_partner) || empty($company_nohp)) {
             echo json_encode(
                 array('status' => false, 'message' => 'Field empty', 'data' => null)
             );
         } else {
-            $data = array('COMPANY_NAME' => $comapny_name, 'COMPANY_ADDRESS' => $company_address, 'COMPANY_IMAGE' => '-');
+            $data = array('COMPANY_NAME' => $comapny_name, 'COMPANY_ADDRESS' => $company_address, 'COMPANY_IMAGE' => '-', 'COMPANY_PARTNER' => $company_partner, 'COMPANY_NOHP' => $company_nohp);
 
             $result = $this->API->insert($data, 'COMPANY');
             if (!$result) {

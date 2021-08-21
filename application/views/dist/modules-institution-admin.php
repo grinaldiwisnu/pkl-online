@@ -81,6 +81,25 @@ $this->load->view('dist/_partials/header');
                     <label>Alamat Institusi</label>
                     <input type="text" class="form-control" name="address">
                   </div>
+                  <div class="form-group">
+                    <h6>Detail Penanggungjawab</h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Nama Penanggungjawab</label>
+                    <input type="text" class="form-control" name="admin_name">
+                  </div>
+                  <div class="form-group">
+                    <label>Email Penanggungjawab</label>
+                    <input type="text" class="form-control" name="admin_email">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor HP Penanggungjawab</label>
+                    <input type="text" class="form-control" name="admin_nohp">
+                  </div>
+                  <div class="form-group">
+                    <label>Password Penanggungjawab</label>
+                    <input type="password" class="form-control" name="admin_password">
+                  </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -109,6 +128,26 @@ $this->load->view('dist/_partials/header');
                   <div class="form-group">
                     <label>Alamat Institusi</label>
                     <input type="text" class="form-control" name="address" id="address">
+                  </div>
+                  <div class="form-group">
+                    <h6>Detail Penanggungjawab</h6>
+                  </div>
+                  <div class="form-group">
+                    <label>Nama Penanggungjawab</label>
+                    <input type="hidden" class="form-control" id="id_admin" name="id_admin">
+                    <input type="text" class="form-control" id="admin_name" name="admin_name">
+                  </div>
+                  <div class="form-group">
+                    <label>Email Penanggungjawab</label>
+                    <input type="text" class="form-control" id="admin_email" name="admin_email">
+                  </div>
+                  <div class="form-group">
+                    <label>Nomor HP Penanggungjawab</label>
+                    <input type="text" class="form-control" id="admin_nohp" name="admin_nohp">
+                  </div>
+                  <div class="form-group">
+                    <label>Password Penanggungjawab</label>
+                    <input type="password" class="form-control" id="admin_password" name="admin_password">
                   </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

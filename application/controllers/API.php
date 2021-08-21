@@ -29,7 +29,7 @@ class API extends CI_Controller {
 				$this->session->set_userdata($arr);
 				$this->msg = array('status' => true, 'message' => 'Login berhasil, mengarahkan ke dashboard ...', 'data' => $do);
 			} else if ($do = $this->API->AuthAdmin(array('ADMIN_EMAIL' => $email, 'ADMIN_PASSWORD' => $password))) {
-				$arr = array('login' => true, 'admin' => true, 'session' => $email, 'name' => $do->ADMIN_NAME, 'id' => $do->ADMIN_ID);
+				$arr = array('login' => true, 'admin' => true, 'session' => $email, 'name' => $do->ADMIN_NAME, 'id' => $do->ADMIN_ID, 'data' => $do);
 				$this->session->set_userdata($arr);
 				$this->msg = array('status' => true, 'message' => 'Login berhasil, mengarahkan ke dashboard ...', 'data' => $do);
 			} else {
